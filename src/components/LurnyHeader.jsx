@@ -1,0 +1,31 @@
+import { IoMenu } from "react-icons/io5";
+
+import "@szhsin/react-menu/dist/index.css";
+import "@szhsin/react-menu/dist/transitions/slide.css";
+
+import LetterLogo from "../assets/icons/letter_logo.png";
+import userImg from "../assets/images/home/User.png";
+
+import { Link } from "react-router-dom";
+
+export default function LurnyHeader() {
+  return (
+    <div className="w-full bg-black px-[16rem] lg:px-[20rem] flex justify-between items-center py-[4rem] lg:py-[1.5rem]">
+      <Link to="/" className="select-none">
+        <img
+          src={LetterLogo}
+          alt="Letter logo"
+          className="w-[48rem] sm:w-[32rem] md:w-[24rem] lg:w-[18rem] xl:w-[12rem]"
+        />
+      </Link>
+      <div className="flex items-center gap-[8rem] lg:gap-[2rem]">
+        <img
+          src={userImg}
+          alt="Chrome Icon"
+          className="w-[16rem] sm:w-[12rem] md:w-[10rem] lg:w-[8rem] xl:w-[4rem] rounded-[100%]"
+        />
+        <IoMenu className="text-[16rem] sm:text-[10rem] md:text-[8rem] lg:text-[6rem] xl:text-[2.5rem] text-gray-500 cursor-pointer" />
+      </div>
+    </div>
+  );
+}
