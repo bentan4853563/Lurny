@@ -1,8 +1,13 @@
 import PropTypes from "prop-types";
+import { useNavigate } from "react-router-dom";
 
 function LurnyItem({ img, category, title }) {
+  const navigate = useNavigate();
   return (
-    <div className="h-[80rem] w-[80rem] sm:w-[48rem] lg:h-[32rem] sm:h-[48rem] lg:w-[32rem] cursor-pointer hover:scale-105 hover:duration-300">
+    <div
+      onClick={() => navigate("/lurny-quiz")}
+      className="h-[80rem] w-[80rem] sm:w-[48rem] lg:h-[32rem] sm:h-[48rem] lg:w-[32rem] cursor-pointer hover:scale-105 hover:duration-300"
+    >
       <img
         src={img}
         alt="lurny image"

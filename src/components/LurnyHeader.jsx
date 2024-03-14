@@ -1,8 +1,5 @@
 import { IoMenu } from "react-icons/io5";
 
-import "@szhsin/react-menu/dist/index.css";
-import "@szhsin/react-menu/dist/transitions/slide.css";
-
 import LetterLogo from "../assets/icons/letter_logo.png";
 import userImg from "../assets/images/home/User.png";
 
@@ -18,6 +15,11 @@ export default function LurnyHeader() {
           className="w-[48rem] sm:w-[32rem] md:w-[24rem] lg:w-[18rem] xl:w-[12rem]"
         />
       </Link>
+      <div className="flex gap-[2rem] text-[2rem] ">
+        <Link to="/lurny-search" className="text-white">
+          Lurny Search
+        </Link>
+      </div>
       <div className="flex items-center gap-[8rem] lg:gap-[2rem]">
         <img
           src={userImg}

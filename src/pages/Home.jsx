@@ -1,6 +1,6 @@
 import { IoMenu } from "react-icons/io5";
 
-import Image1 from "../assets/images/home/home1.png";
+// import Image1 from "../assets/images/home/home1.png";
 import Image2 from "../assets/images/home/home4.png";
 import Image3 from "../assets/images/home/home2.png";
 import Image4 from "../assets/images/home/home5.png";
@@ -10,19 +10,40 @@ import Image7 from "../assets/images/home/home8.png";
 import Image8 from "../assets/images/home/home9.png";
 
 import userImg from "../assets/images/home/User.png";
+import playIcon from "../assets/icons/play-icon.png";
 import FaqComponent from "../components/FaqComponent";
 import Header from "../components/Header";
 
 export default function Home() {
+  const getYouTubeID = (url) => {
+    const regExp =
+      /^.*(youtu\.be\/|youtube(?:-nocookie)?\.com\/(?:(?:v|e)\/|(?:watch|embed(?:\/popup)?)(?:\.php)?\?v=|\/(?:[a-z]{2}\/)?video\/))([^#&?]*).*/;
+    const match = url.match(regExp);
+
+    if (match && match[2].length === 11) {
+      return match[2];
+    }
+
+    return null;
+  };
+
+  const Video = "https://www.youtube.com/watch?v=iyabl4dlxbY";
   return (
     <div className="flex flex-col font-raleway">
       <Header />
       <div className="bg-neutral-800 py-[8rem] px-[20rem] flex flex-wrap items-center">
-        <div className="w-full sm:w-1/3">
-          <img
+        <div className="w-full sm:w-1/3 relative">
+          {/* <img
             src={Image1}
             alt="Image1"
             className="w-full object-cover mx-auto"
+          /> */}
+          <iframe
+            src={`https://www.youtube.com/embed/${getYouTubeID(Video)}`}
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+            title="Upload"
+            className="inline-block w-full h-full object-cover mx-auto"
           />
         </div>
         <div className="w-2/3 flex-auto flex flex-col items-start justify-between gap-[4rem] sm:gap-[2rem] mt-[4rem] sm:mt-0 sm:pl-[6rem]">
@@ -103,6 +124,9 @@ export default function Home() {
         </div>
         <div className="w-5/12 hidden sm:flex relative">
           <img src={Image3} alt="image3" className="object-cover" />
+          <div className=" absolute left-[8rem] top-[10rem]">
+            <img src={playIcon} alt="Play icon" className="w-[8rem]" />
+          </div>
         </div>
       </div>
 
@@ -117,13 +141,9 @@ export default function Home() {
           a memorable adventure. Let’s dive into the essence of Lurny
         </p>
         <div className="flex flex-wrap gap-[16rem] md:gap-[8rem] lg:gap-[4rem] justify-center my-[12rem] sm:my-[6rem]">
-          <div className="w-[120rem] sm:w-[64rem] md:w-[56rem] lg:w-[48rem] xl:w-[34rem] bg-white rounded-[3rem] p-[12rem] sm:p-[2rem] flex flex-col justify-start items-start">
-            <img
-              src={Image4}
-              alt=""
-              className="h-[24rem] lg:h-[12rem] sm:w-[12rem]"
-            />
-            <span className="text-[#7F52BB] text-[8rem] sm:text-[6rem] md:text-[5rem] lg:text-[4rem] font-bold">
+          <div className="w-[120rem] sm:w-[64rem] md:w-[56rem] lg:w-[48rem] xl:w-[34rem] bg-white rounded-[3rem] px-[12rem] pb-[12rem] sm:px-[2rem] sm:pb-[2rem] flex flex-col justify-start items-start">
+            <img src={Image4} alt="" className="h-[24rem] lg:h-[12rem]" />
+            <span className="text-[#7F52BB] text-[8rem] sm:text-[6rem] md:text-[5rem] lg:text-[3rem] font-bold">
               StubIT
             </span>
             <span className="text-black text-left text-[8rem] sm:text-[4rem] md:text-[2.5rem] lg:text-[2rem] font-bold leading-[8.5rem] sm:leading-[4.5rem] md-leading-[3rem] lg:leading-[2.5rem]">
@@ -135,13 +155,9 @@ export default function Home() {
               engaging Lurnies with just one click
             </p>
           </div>
-          <div className="w-[120rem] sm:w-[64rem] md:w-[56rem] lg:w-[48rem] xl:w-[34rem] bg-white rounded-[3rem] p-[12rem] sm:p-[2rem] flex flex-col justify-start items-start">
-            <img
-              src={Image5}
-              alt=""
-              className="h-[24rem] lg:h-[12rem] sm:w-[12rem]"
-            />
-            <span className="text-[#7F52BB] text-[8rem] sm:text-[6rem] md:text-[5rem] lg:text-[4rem] font-bold">
+          <div className="w-[120rem] sm:w-[64rem] md:w-[56rem] lg:w-[48rem] xl:w-[34rem] bg-white rounded-[3rem] px-[12rem] pb-[12rem] sm:px-[2rem] sm:pb-[2rem] flex flex-col justify-start items-start">
+            <img src={Image5} alt="" className="h-[24rem] lg:h-[12rem]" />
+            <span className="text-[#7F52BB] text-[8rem] sm:text-[6rem] md:text-[5rem] lg:text-[3rem] font-bold">
               ROSI
             </span>
             <span className="text-black text-left text-[8rem] sm:text-[4rem] md:text-[2.5rem] lg:text-[2rem] font-bold leading-[8.5rem] sm:leading-[4.5rem] md-leading-[3rem] lg:leading-[2.5rem]">
@@ -153,13 +169,9 @@ export default function Home() {
               you learn.
             </p>
           </div>
-          <div className="w-[120rem] sm:w-[64rem] md:w-[56rem] lg:w-[48rem] xl:w-[34rem] bg-white rounded-[3rem] p-[12rem] sm:p-[2rem] flex flex-col justify-start items-start">
-            <img
-              src={Image6}
-              alt=""
-              className="h-[24rem] lg:h-[12rem] sm:w-[12rem]"
-            />
-            <span className="text-[#7F52BB] text-[8rem] sm:text-[6rem] md:text-[5rem] lg:text-[4rem] font-bold">
+          <div className="w-[120rem] sm:w-[64rem] md:w-[56rem] lg:w-[48rem] xl:w-[34rem] bg-white rounded-[3rem] px-[12rem] pb-[12rem] sm:px-[2rem] sm:pb-[2rem] flex flex-col justify-start items-start">
+            <img src={Image6} alt="" className="h-[24rem] lg:h-[12rem]" />
+            <span className="text-[#7F52BB] text-[8rem] sm:text-[6rem] md:text-[5rem] lg:text-[3rem] font-bold">
               Quizzify
             </span>
             <span className="text-black text-left text-[8rem] sm:text-[4rem] md:text-[2.5rem] lg:text-[2rem] font-bold leading-[8.5rem] sm:leading-[4.5rem] md-leading-[3rem] lg:leading-[2.5rem]">
@@ -171,13 +183,9 @@ export default function Home() {
               deepen understanding.
             </p>
           </div>
-          <div className="w-[120rem] sm:w-[64rem] md:w-[56rem] lg:w-[48rem] xl:w-[34rem] bg-white rounded-[3rem] p-[12rem] sm:p-[2rem] flex flex-col justify-start items-start">
-            <img
-              src={Image7}
-              alt=""
-              className="h-[24rem] lg:h-[12rem] sm:w-[12rem]"
-            />
-            <span className="text-[#7F52BB] text-[8rem] sm:text-[6rem] md:text-[5rem] lg:text-[4rem] font-bold">
+          <div className="w-[120rem] sm:w-[64rem] md:w-[56rem] lg:w-[48rem] xl:w-[34rem] bg-white rounded-[3rem] px-[12rem] pb-[12rem] sm:px-[2rem] sm:pb-[2rem] flex flex-col justify-start items-start">
+            <img src={Image7} alt="" className="h-[24rem] lg:h-[12rem]" />
+            <span className="text-[#7F52BB] text-[8rem] sm:text-[6rem] md:text-[5rem] lg:text-[3rem] font-bold">
               Socritic
             </span>
             <span className="text-black text-left text-[8rem] sm:text-[4rem] md:text-[2.5rem] lg:text-[2rem] font-bold leading-[8.5rem] sm:leading-[4.5rem] md-leading-[3rem] lg:leading-[2.5rem]">
