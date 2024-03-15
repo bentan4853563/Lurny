@@ -15,9 +15,12 @@ export default function LurnyHeader() {
           className="w-[48rem] sm:w-[32rem] md:w-[24rem] lg:w-[18rem] xl:w-[12rem]"
         />
       </Link>
-      <div className="flex gap-[2rem] text-[2rem] ">
-        <Link to="/lurny-search" className="text-white">
+      <div className="flex gap-[4rem] text-[2rem] ">
+        <Link to="#" className="text-white hover:text-gray-300">
           Lurny Search
+        </Link>
+        <Link to="/lurny-category" className="text-white hover:text-gray-300">
+          Lurny Category
         </Link>
       </div>
       <div className="flex items-center gap-[8rem] lg:gap-[2rem]">

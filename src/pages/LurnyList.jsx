@@ -1,59 +1,51 @@
+import { useEffect, useState } from "react";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 import { IoIosArrowForward } from "react-icons/io";
 
-import LurnyHeader from "../components/LurnyHeader";
+import { useLurnyStore } from "../stores/lurnyStore";
 
-import lurnyImg from "../assets/images/Lurny/lurny1.png";
+import LurnyHeader from "../components/LurnyHeader";
 import LurnyItem from "../components/LurnyItem";
-// import Pagination from "../components/Pagination";
 import FilterPan from "../components/FilterPan";
-import { useState } from "react";
-import Pagination from "../components/Pagination";
+// import Pagination from "../components/Pagination";
 
 const LurnyList = () => {
-  const lurnyList = [
-    {
-      img: lurnyImg,
-      category: "PROJECT MANAGEMENT TECHNOLOGY",
-      title:
-        "Project Managers as Strategic Leaders – in the C-suite and beyond",
-    },
-    {
-      img: lurnyImg,
-      category: "PROJECT MANAGEMENT",
-      title:
-        "Project Managers as Strategic Leaders – in the C-suite and beyond",
-    },
-    {
-      img: lurnyImg,
-      category: "PROJECT MANAGEMENT",
-      title:
-        "Project Managers as Strategic Leaders – in the C-suite and beyond",
-    },
-    {
-      img: lurnyImg,
-      category: "PROJECT MANAGEMENT",
-      title:
-        "Project Managers as Strategic Leaders – in the C-suite and beyond",
-    },
-    {
-      img: lurnyImg,
-      category: "PROJECT MANAGEMENT",
-      title:
-        "Project Managers as Strategic Leaders – in the C-suite and beyond",
-    },
-    {
-      img: lurnyImg,
-      category: "PROJECT MANAGEMENT",
-      title:
-        "Project Managers as Strategic Leaders – in the C-suite and beyond",
-    },
-  ];
-
+  const { lurnies, setLurnies } = useLurnyStore();
   const [showFilter, setShowFilter] = useState(false);
+
+  const backend_url = "https://6faf-88-99-162-157.ngrok-free.app";
+
+  useEffect(() => {
+    getLurnies();
+  }, []);
+
+  const getLurnies = async () => {
+    const options = {
+      method: "GET", // Request method
+      headers: {
+        "Content-Type": "application/json", // Indicate JSON content
+      },
+    };
+
+    await fetch(`${backend_url}/api/lurny/get`, options)
+      .then((response) => response.json()) // Parse JSON response
+      .then((responseData) => {
+        setLurnies(responseData);
+      })
+      .catch((error) => {
+        console.error("Error:", error); // Handle errors
+        // toast.error(`Error! \n${error}`, {
+        //   position: "top-right",
+        // });
+      });
+  };
 
   return (
     <div className="w-[100vw] h-[100vh] font-raleway">
       <LurnyHeader />
+      <ToastContainer />
       <div className="bg-[#2E2E2E] flex flex-col text-white py-[4rem] sm:py-[3rem] lg:py-[2rem]">
         <span className="text-[12rem] lg:text-[4rem] font-bold">
           All Lurnies
@@ -84,18 +76,13 @@ const LurnyList = () => {
 
         <div className="flex flex-col justify-between">
           <div className="flex flex-wrap justify-start gap-[8rem] lg:gap-[2rem]">
-            {lurnyList.map((lurny, index) => (
-              <LurnyItem
-                key={index}
-                title={lurny.title}
-                category={lurny.category}
-                img={lurny.img}
-              />
+            {lurnies.map((lurny, index) => (
+              <LurnyItem key={index} data={lurny} />
             ))}
           </div>
-          <div className="flex justify-center mt-[4rem]">
+          {/* <div className="flex justify-center mt-[4rem]">
             <Pagination />
-          </div>
+          </div> */}
         </div>
       </div>
     </div>
