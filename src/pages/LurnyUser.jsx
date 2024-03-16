@@ -16,8 +16,8 @@ const LurnyUser = () => {
     useLurnyStore();
   const [tempData, setTempData] = useState(null);
 
-  const backend_url = "https://6faf-88-99-162-157.ngrok-free.app";
-  // const backend_url = import.meta.env.VITE_BACKEND_URL;
+  // const backend_url = "https://6faf-88-99-162-157.ngrok-free.app";
+  const backend_url = import.meta.env.VITE_BACKEND_URL;
 
   useEffect(() => {
     getLurnies();
@@ -148,10 +148,7 @@ const LurnyUser = () => {
         "ngrok-skip-browser-warning": true,
       },
     };
-    await fetch(
-      "https://6faf-88-99-162-157.ngrok-free.app/api/lurny/get",
-      options
-    )
+    await fetch(`${backend_url}/api/lurny/get`, options)
       .then((response) => response.json()) // Parse JSON response
       .then((responseData) => {
         console.log(responseData);

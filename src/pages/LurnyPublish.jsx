@@ -15,7 +15,7 @@ const LurnyPublish = () => {
   const { lurnies, setLurnies } = useLurnyStore();
   const [showFilter, setShowFilter] = useState(false);
 
-  const backend_url = "https://6faf-88-99-162-157.ngrok-free.app";
+  const backend_url = import.meta.env.VITE_BACKEND_URL;
 
   useEffect(() => {
     getLurnies();
