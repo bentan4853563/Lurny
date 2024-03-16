@@ -11,7 +11,7 @@ import LurnyItem from "../components/LurnyItem";
 import FilterPan from "../components/FilterPan";
 // import Pagination from "../components/Pagination";
 
-const LurnyList = () => {
+const LurnyPublish = () => {
   const { lurnies, setLurnies } = useLurnyStore();
   const [showFilter, setShowFilter] = useState(false);
 
@@ -76,9 +76,10 @@ const LurnyList = () => {
 
         <div className="flex flex-col justify-between">
           <div className="flex flex-wrap justify-start gap-[8rem] lg:gap-[2rem]">
-            {lurnies.map((lurny, index) => (
-              <LurnyItem key={index} data={lurny} />
-            ))}
+            {lurnies.map(
+              (lurny, index) =>
+                lurny.shared && <LurnyItem key={index} data={lurny} />
+            )}
           </div>
           {/* <div className="flex justify-center mt-[4rem]">
             <Pagination />
@@ -89,4 +90,4 @@ const LurnyList = () => {
   );
 };
 
-export default LurnyList;
+export default LurnyPublish;

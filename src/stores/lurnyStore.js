@@ -4,9 +4,11 @@ export const useLurnyStore = create((set) => ({
   newLurny: {},
   lurnies: [],
   setLurnies: (lurnyData) => set({ lurnies: lurnyData }),
-  setNewLurny: (lurny) => set({ newLurny: lurny }),
-  share: () =>
+  addLurny: (lurny) => set((state) => ({ lurnies: [...state.lurnies, lurny] })),
+  shareLurny: (id) =>
     set((state) => ({
-      newLurny: { ...state.newLurny, shared: true },
+      lurnies: state.lurnies.map((item) =>
+        item._id === id ? { ...item, shared: true } : item
+      ),
     })),
 }));

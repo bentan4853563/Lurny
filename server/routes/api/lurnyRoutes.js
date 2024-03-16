@@ -8,7 +8,7 @@ const Lurny = require("../../models/Lurny");
 router.get("/get", async (req, res) => {
   try {
     console.log("get lurnies");
-    const lurnies = await Lurny.find();
+    const lurnies = await Lurny.find().sort({ shared: 1 });
     res.json(lurnies);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -27,19 +27,23 @@ router.post("/insert", async (req, res) => {
   }
 });
 
-router.patch("/lurnies/:id", async (req, res) => {
+router.patch("/share/:id", async (req, res) => {
   try {
-    const updatedLurny = await Lurny.findByIdAndUpdate(
-      req.params.id,
-      req.body,
+    const { id } = req.params;
+
+    const result = await Lurny.findByIdAndUpdate(
+      id,
+      { shared: true }, // Set sharedField to true
       { new: true }
     );
-    if (!updatedLurny) {
-      return res.status(404).json({ message: "Lurny not found" });
+
+    if (!result) {
+      return res.status(404).send("Document shared.");
     }
-    res.json(updatedLurny);
+
+    res.send(result);
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    res.status(500).send("Internal Server Error");
   }
 });
 

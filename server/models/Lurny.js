@@ -37,7 +37,7 @@ const LurnySchema = new mongoose.Schema({
   },
   shared: {
     type: Boolean,
-    default: true,
+    default: false,
   },
 });
 

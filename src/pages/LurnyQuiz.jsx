@@ -198,12 +198,19 @@ function LurnyQuiz() {
                 >
                   SUBMIT ANSWER
                 </button>
-              ) : (
+              ) : currentQuestionNumber < quiz.length - 1 ? (
                 <button
                   onClick={handleNextQuiz}
                   className="bg-[#FFC36D] text-[1.8rem] border-none focus:outline-none active:bg-yellow-300 text-black"
                 >
                   NEXT QUESTION
+                </button>
+              ) : (
+                <button
+                  onClick={() => navigate("/lurny-category")}
+                  className="bg-[#FFC36D] text-[1.8rem] border-none focus:outline-none active:bg-yellow-300 text-black"
+                >
+                  GO TO HOME
                 </button>
               )}
             </div>

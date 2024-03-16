@@ -11,8 +11,9 @@ import LurnyItem from "../components/LurnyItem";
 
 import defaultImg from "../assets/images/Lurny/default.png";
 
-const LurnyCategory = () => {
-  const { newLurny, lurnies, setNewLurny, setLurnies, share } = useLurnyStore();
+const LurnyUser = () => {
+  const { newLurny, lurnies, addLurny, setLurnies, shareLurny } =
+    useLurnyStore();
   const [tempData, setTempData] = useState(null);
 
   const backend_url = "https://6faf-88-99-162-157.ngrok-free.app";
@@ -72,7 +73,8 @@ const LurnyCategory = () => {
         url,
       };
       // Add the new lurny to zustand store.
-      setNewLurny(lurnyObject);
+      // setNewLurny(lurnyObject);
+      handleInsert(lurnyObject);
     }
   }, [tempData]);
 
@@ -88,7 +90,7 @@ const LurnyCategory = () => {
     }
   };
 
-  const handleShare = async (lurny) => {
+  const handleInsert = async (lurny) => {
     const options = {
       method: "POST", // Request method
       headers: {
@@ -100,17 +102,42 @@ const LurnyCategory = () => {
     await fetch(`${backend_url}/api/lurny/insert`, options)
       .then((response) => response.json()) // Parse JSON response
       .then((responseData) => {
-        share();
-        toast.success(`Shared! \n${responseData}`, {
+        addLurny(responseData);
+        toast.success("Inserted!", {
           position: "top-right",
         });
       })
       .catch((error) => {
         console.error("Error:", error); // Handle errors
-        toast.error(`Error! \n${error}`, {
+        toast.error("Error!", {
           position: "top-right",
         });
       });
+  };
+
+  const handleShare = async (id) => {
+    try {
+      const response = await fetch(`${backend_url}/api/lurny/share/${id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (response.ok) {
+        shareLurny(id);
+        toast.success("Shared successfuly!", {
+          position: "top-right",
+        });
+      } else {
+        toast.error("Faild share!", {
+          position: "top-right",
+        });
+      }
+    } catch (error) {
+      toast.error("Network error when trying to update the shared field!", {
+        position: "top-right",
+      });
+    }
   };
 
   const getLurnies = async () => {
@@ -154,8 +181,8 @@ const LurnyCategory = () => {
                   </div>
                 ) : (
                   <div
-                    className="bg-white px-[2rem] py-[1rem] rounded-md flex justify-between items-center text-black text-[2.2rem] cursor-pointer"
-                    onClick={() => handleShare(newLurny)}
+                    className="bg-white px-[2rem] rounded-md flex justify-between items-center text-black text-[2rem] cursor-pointer"
+                    onClick={() => handleShare(newLurny._id)}
                   >
                     <TfiShare />
                     <span className="flex flex-1 justify-center">
@@ -169,14 +196,14 @@ const LurnyCategory = () => {
               lurnies.map((lurny, index) => (
                 <div key={index} className="">
                   <LurnyItem data={lurny} />
-                  {lurny._id ? (
+                  {lurny.shared ? (
                     <div className="bg-[#00B050] py-[1rem] rounded-md text-white text-[2rem] cursor-pointer">
                       Shared
                     </div>
                   ) : (
                     <div
-                      className="bg-white px-[2rem] py-[1rem] rounded-md flex justify-between items-center text-black text-[2.2rem] cursor-pointer"
-                      onClick={() => handleShare(lurny)}
+                      className="bg-white px-[2rem] py-[0.8rem] rounded-md flex justify-between items-center text-black text-[2.2rem] cursor-pointer"
+                      onClick={() => handleShare(lurny._id)}
                     >
                       <TfiShare />
                       <span className="flex flex-1 justify-center">
@@ -193,4 +220,4 @@ const LurnyCategory = () => {
   );
 };
 
-export default LurnyCategory;
+export default LurnyUser;
