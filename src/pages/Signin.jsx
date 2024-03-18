@@ -17,6 +17,8 @@ import {
 export default function Signin() {
   const navigate = useNavigate();
 
+  const backend_url = import.meta.env.VITE_BACKEND_URL;
+
   async function signInWithGoogle() {
     const provider = new GoogleAuthProvider();
     try {
@@ -43,7 +45,7 @@ export default function Signin() {
 
   async function signIn(accessToken) {
     try {
-      const response = await fetch("http://localhost:5009/api/auth/signIn", {
+      const response = await fetch(`${backend_url}/api/auth/signIn`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

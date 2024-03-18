@@ -22,6 +22,8 @@ const Signup = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
 
+  const backend_url = import.meta.env.VITE_BACKEND_URL;
+
   function signUpWithGoogle() {
     const provider = new GoogleAuthProvider();
     signInWithPopup(auth, provider)
@@ -53,7 +55,7 @@ const Signup = () => {
 
   async function signUp(accessToken) {
     try {
-      const response = await fetch("http://localhost:5009/api/auth/signup", {
+      const response = await fetch(`${backend_url}/api/auth/signup`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

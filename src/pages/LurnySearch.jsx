@@ -15,12 +15,26 @@ import CategoryPan from "../components/CatetoryPan";
 const LurnySearch = () => {
   const { lurnies, setLurnies } = useLurnyStore();
   const [showFilter, setShowFilter] = useState(false);
+  const [searchTerm, setSearchTerm] = useState(""); // State to hold the search term
+  const [filteredLurnies, setFilteredLurnies] = useState([]);
 
   const backend_url = import.meta.env.VITE_BACKEND_URL;
 
   useEffect(() => {
     getLurnies();
   }, []);
+
+  useEffect(() => {
+    setFilteredLurnies(
+      lurnies.filter(
+        (lurny) =>
+          lurny.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          lurny.collections.some((collection) =>
+            collection.toLowerCase().includes(searchTerm.toLowerCase())
+          )
+      )
+    );
+  }, [searchTerm, lurnies]);
 
   const getLurnies = async () => {
     const options = {
@@ -54,6 +68,8 @@ const LurnySearch = () => {
           <ImSearch className="text-white text-[3rem]" />
           <input
             type="text"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
             className="bg-transparent text-white text-[2.5rem] px-[1rem] flex flex-1 focus:outline-none"
             placeholder="Search topics and people"
           />
@@ -80,10 +96,11 @@ const LurnySearch = () => {
 
           <div className="flex flex-col justify-between">
             <div className="flex flex-wrap justify-start gap-[8rem] lg:gap-[2rem]">
-              {lurnies.map(
-                (lurny, index) =>
-                  lurny.shared && <LurnyItem key={index} data={lurny} />
-              )}
+              {filteredLurnies.length > 0 &&
+                filteredLurnies.map(
+                  (lurny, index) =>
+                    lurny.shared && <LurnyItem key={index} data={lurny} />
+                )}
             </div>
             {/* <div className="flex justify-center mt-[4rem]">
             <Pagination />

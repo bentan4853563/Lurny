@@ -12,6 +12,7 @@ import LurnyItem from "../components/LurnyItem";
 
 import defaultImg from "../assets/images/Lurny/default.png";
 import UserPan from "../components/UserPan";
+import NewPagination from "../components/NewPagination";
 
 const LurnyUser = () => {
   const { lurnies, addLurny, setLurnies, shareLurny } = useLurnyStore();
@@ -19,6 +20,15 @@ const LurnyUser = () => {
   const [showSidePan, setShowSidePan] = useState(false);
   const [userData, setUserData] = useState(null);
   const [showAll, setShowAll] = useState(true);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(8); // Adjust as needed
+  // Get current items
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = lurnies.slice(indexOfFirstItem, indexOfLastItem);
+  // Change page
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   useEffect(() => {
     const accessToken = sessionStorage.getItem("token");
@@ -164,7 +174,7 @@ const LurnyUser = () => {
     lurnies.length > 0 ? lurnies.filter((obj) => obj.shared).length : 0;
 
   return (
-    <div className="w-[100vw] h-[100vh] font-raleway">
+    <div className="min-w-[100vw] min-h-[100vh] font-raleway">
       <LurnyHeader />
       <ToastContainer className="text-[2rem]" />
       <div className="w-full bg-[#262626] flex flex-1 p-[12rem] sm:p-[6rem] gap-[12rem] sm:gap-[4rem]">
@@ -190,10 +200,10 @@ const LurnyUser = () => {
         <div
           className={`${showSidePan ? "absolute" : "hidden"} sm:block`}
         ></div>
-        <div className="flex flex-col justify-between">
+        <div className="w-full flex flex-col justify-between  items-center">
           <div className="flex flex-wrap justify-start gap-[8rem] lg:gap-[2rem]">
-            {lurnies.length > 0 &&
-              lurnies.map((lurny, index) => (
+            {currentItems.length > 0 &&
+              currentItems.map((lurny, index) => (
                 <div key={index}>
                   {(lurny.shared || showAll) && <LurnyItem data={lurny} />}
                   {lurny.shared ? (
@@ -216,6 +226,12 @@ const LurnyUser = () => {
                 </div>
               ))}
           </div>
+          <NewPagination
+            totalItems={lurnies.length}
+            itemsPerPage={itemsPerPage}
+            currentPage={currentPage}
+            paginate={(value) => paginate(value)}
+          />
         </div>
       </div>
     </div>

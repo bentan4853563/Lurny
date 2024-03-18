@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 
+import { ImSearch } from "react-icons/im";
 import { IoMenu } from "react-icons/io5";
 import { Menu, MenuItem, MenuButton } from "@szhsin/react-menu";
 import "@szhsin/react-menu/dist/index.css";
@@ -50,18 +51,20 @@ export default function LurnyHeader() {
             className="w-[16rem] sm:w-[12rem] md:w-[10rem] lg:w-[8rem] xl:w-[4rem] rounded-[100%]"
           />
         </Link> */}
+        <ImSearch className="text-[16rem] sm:text-[10rem] md:text-[8rem] lg:text-[6rem] xl:text-[3rem] text-gray-500 cursor-pointer" />
+
         <Link to="/lurny-category" className="felx items-center">
           {userData && (
             <img
               src={userData.photoURL}
               alt="User avatar"
-              className="w-[16rem] sm:w-[12rem] md:w-[10rem] lg:w-[8rem] xl:w-[6rem] rounded-[100%] cursor-pointer"
+              className="w-[16rem] sm:w-[12rem] md:w-[10rem] lg:w-[8rem] xl:w-[4rem] rounded-[100%] cursor-pointer"
             />
           )}
         </Link>
         <Menu
           menuButton={
-            <MenuButton className="h-10 flex justify-center items-center focus:outline-none border-none">
+            <MenuButton className="h-10 px-0 flex justify-center items-center focus:outline-none border-none">
               <IoMenu className="text-[16rem] sm:text-[10rem] md:text-[8rem] lg:text-[6rem] xl:text-[4rem] text-gray-500 cursor-pointer" />
             </MenuButton>
           }

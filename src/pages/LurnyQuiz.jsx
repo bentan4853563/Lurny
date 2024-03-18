@@ -156,7 +156,7 @@ function LurnyQuiz() {
               src={userData.photoURL}
               alt="Chrome Icon"
               onClick={() => navigate("/lurny-category")}
-              className="w-[16rem] sm:w-[12rem] md:w-[10rem] lg:w-[8rem] xl:w-[6rem] rounded-[100%] cursor-pointer"
+              className="w-[16rem] sm:w-[12rem] md:w-[10rem] lg:w-[8rem] xl:w-[4rem] rounded-[100%] cursor-pointer"
             />
           )}
           <IoMenu className="text-[16rem] sm:text-[10rem] md:text-[8rem] lg:text-[6rem] xl:text-[4rem] text-gray-500 cursor-pointer" />

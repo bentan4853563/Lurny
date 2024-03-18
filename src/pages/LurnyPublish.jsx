@@ -18,12 +18,10 @@ const LurnyPublish = () => {
 
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(8); // Adjust as needed
-
   // Get current items
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = lurnies.slice(indexOfFirstItem, indexOfLastItem);
-
   // Change page
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
