@@ -13,6 +13,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
 app.use("/api/lurny", require("./routes/api/lurnyRoutes"));
+app.use("/api/auth", require("./routes/api/newAuth"));
 
 const PORT = process.env.PORT || 5009;
 

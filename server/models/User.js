@@ -1,27 +1,16 @@
-import { Schema, model } from "mongoose";
+/* eslint-disable no-undef */
+const mongoose = require("mongoose");
 
-const UserSchema = new Schema({
-  fullName: {
-    type: String,
-    required: true,
-  },
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-  },
-  picture: {
-    type: String,
-    required: true,
-  },
-  date: {
-    type: Date,
-    default: Date.now,
-  },
-  role: {
-    type: Number,
-    default: 1,
-  },
+// Define the user schema
+const userSchema = new mongoose.Schema({
+  uid: { type: String, required: true, unique: true },
+  email: { type: String, required: true, unique: true },
+  displayName: { type: String, required: false },
+  photoURL: { type: String, required: false },
+  createdAt: { type: Date, default: Date.now },
 });
 
-export default model("user", UserSchema);
+// Create the model from the schema
+const User = mongoose.model("user", userSchema);
+
+module.exports = User;

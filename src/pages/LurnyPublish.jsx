@@ -51,7 +51,7 @@ const LurnyPublish = () => {
           All Lurnies
         </span>
         <span className="text-[8rem] lg:text-[2.5rem] font-medium">
-          143K Lurnies and counting…
+          {lurnies.length} Lurnies and counting…
         </span>
       </div>
       <div className="w-full bg-[#262626] flex flex-1 p-[12rem] sm:p-[6rem] gap-[12rem] sm:gap-[4rem]">

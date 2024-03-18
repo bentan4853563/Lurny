@@ -7,8 +7,19 @@ const Lurny = require("../../models/Lurny");
 
 router.get("/get", async (req, res) => {
   try {
-    console.log("get lurnies");
-    const lurnies = await Lurny.find().sort({ shared: 1 });
+    const lurnies = await Lurny.find().sort({ date: -1 });
+    res.json(lurnies);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+router.post("/my-lurnies", async (req, res) => {
+  try {
+    const lurnies = await Lurny.find({ user: req.body.user }).sort({
+      date: -1,
+      shared: 1,
+    });
     res.json(lurnies);
   } catch (error) {
     res.status(500).json({ message: error.message });

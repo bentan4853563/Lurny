@@ -7,6 +7,10 @@ const LurnySchema = new mongoose.Schema({
   //   ref: "User", // Typically model names are capitalized
   //   required: true, // Assuming every Lurny entry must be associated with a user
   // },
+  user: {
+    type: String,
+    required: true,
+  },
   date: {
     type: Date,
     default: Date.now, // Removed the parentheses to use the function itself as the default value generator

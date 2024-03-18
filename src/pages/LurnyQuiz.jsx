@@ -19,14 +19,19 @@ function LurnyQuiz() {
   const navigate = useNavigate();
   const location = useLocation();
 
+  const [quizData, setQuizData] = useState({
+    title: "",
+    summary: [],
+    quiz: [],
+    newImg: "",
+    collections: [],
+    url: "",
+  });
   const [content, setContent] = useState(0);
   const [currentQuestionNumber, setCurrentQuestionNumber] = useState(0);
   const [answerNumber, setAnswerNumber] = useState(null);
   const [answered, setAnswered] = useState(false);
   const [isShowCorrectAnswer, setIsShowCorrectAnswer] = useState(false);
-
-  const data = location.state;
-  const { title, summary, quiz, newImg, collections, url } = data;
 
   useEffect(() => {
     setAnswerNumber(null);
@@ -37,6 +42,15 @@ function LurnyQuiz() {
     setCurrentQuestionNumber(0);
   }, [content]);
 
+  useEffect(() => {
+    if (location.state) {
+      console.log("lsdkfjlsdfj");
+      setQuizData(location.state);
+    }
+  }, [location.state]);
+
+  const { title, summary, quiz, newImg, collections, url } = quizData;
+
   const buttons = ["Read Full Article", "Quiz Me!", "Remember this"];
 
   const handleNextQuiz = () => {
@@ -46,80 +60,99 @@ function LurnyQuiz() {
     setAnswered(false);
   };
 
+  const handlePreviousContent = () => {
+    content > 0 && setContent(content - 1);
+  };
+
+  const handleNextContent = () => {
+    content < 2 && setContent(content + 1);
+  };
+
   const classNames = (...classes) => {
     return classes.filter(Boolean).join(" ");
   };
-  console.log(quiz.length, currentQuestionNumber);
+
   return (
-    <div className="font-raleway min-h-[100vh]">
+    <div className="min-w-[100vw] min-h-[100vh] font-raleway">
       {/* Header */}
-      <div className="w-full bg-black px-[16rem] lg:px-[20rem] flex justify-between items-center py-[4rem] lg:py-[1.5rem]">
-        <Link to="/" className="select-none">
+      <div className="w-full bg-black px-[4rem] sm:px-[16rem] lg:px-[20rem] flex justify-between items-center py-[4rem] lg:py-[1.5rem]">
+        <Link to="/lurny-list" className="select-none">
           <img
             src={LetterLogo}
             alt="Letter logo"
             className="w-[48rem] sm:w-[32rem] md:w-[24rem] lg:w-[18rem] xl:w-[12rem]"
           />
         </Link>
-        <div className="flex items-center gap-[2rem]">
-          <div className="w-[4rem] h-[4rem] flex items-center justify-center pr-1 text-white text-[3rem] bg-[#7F52BB] rounded-full">
+        <div className="flex items-center gap-[4rem] sm:gap-[2rem]">
+          <button
+            onClick={handlePreviousContent}
+            className="flex items-center justify-center p-[0.5rem] sm:pl-2 text-white text-[10rem] sm:text-[3rem] bg-[#7F52BB] rounded-full focus:outline-none"
+          >
             <IoIosArrowBack />
-          </div>
+          </button>
           {buttons.map((name, index) => (
-            <button
+            <span
               key={index}
               className={`${
-                content === index ? "bg-[#595959]" : "bg-transparent"
-              } text-white xl:text-[2rem] font-thin focus:outline-none border-none`}
+                content === index
+                  ? "bg-[#595959] flex"
+                  : "bg-transparent hidden sm:flex"
+              } w-[52rem] sm:w-auto items-center justify-center text-white px-[2rem] py-[2.5rem] sm:py-[0.5rem] rounded-[2rem] sm:rounded-[0.5rem] text-[6.5rem] sm:text-[2rem] font-thin focus:outline-none border-none cursor-pointer`}
               onClick={() => setContent(index)}
             >
               {name}
-            </button>
+            </span>
           ))}
-          <div className="w-[4rem] h-[4rem] flex items-center justify-center pl-2 text-white text-[3rem] bg-[#7F52BB] rounded-full">
+          <button
+            onClick={handleNextContent}
+            className="flex items-center justify-center p-[0.5rem] sm:pl-2 text-white text-[10rem] sm:text-[3rem] bg-[#7F52BB] rounded-full focus:outline-none"
+          >
             <IoIosArrowForward />
-          </div>
+          </button>
         </div>
         <div className="flex items-center gap-[8rem] lg:gap-[2rem]">
           <img
             src={userImg}
             alt="Chrome Icon"
-            className="w-[16rem] sm:w-[12rem] md:w-[10rem] lg:w-[8rem] xl:w-[6rem] rounded-[100%]"
+            onClick={() => navigate("/lurny-category")}
+            className="w-[16rem] sm:w-[12rem] md:w-[10rem] lg:w-[8rem] xl:w-[6rem] rounded-[100%] cursor-pointer"
           />
           <IoMenu className="text-[16rem] sm:text-[10rem] md:text-[8rem] lg:text-[6rem] xl:text-[4rem] text-gray-500 cursor-pointer" />
         </div>
       </div>
 
       {/* body */}
-      <div className="flex px-[24rem] py-[8rem]">
+      <div className="flex flex-wrap px-[12rem] py-[8rem] gap-[8rem] sm:gap-0">
         {/* Image */}
-        <div className="flex flex-col items-start w-[32rem]">
+        <div className="w-full sm:w-[32rem] px-[16rem] sm:px-0 flex flex-col items-start">
           <a
             href={url}
             target="black"
-            className="text-white text-start text-[2.5rem] hover:text-sky-500"
+            className="text-white text-start text-[7rem] sm:text-[2.5rem] hover:text-sky-500"
           >
             View Original
           </a>
           <img
             src={newImg}
             alt=""
-            className="w-full h-[20rem] object-cover rounded-[2rem]"
+            className="w-full h-[64rem] sm:h-[20rem] object-cover rounded-[2rem]"
           />
         </div>
 
-        <div className="flex flex-1 px-[8rem]">
+        <div className="flex flex-1 px-0 sm:px-[8rem]">
           {content === 0 && (
             // Full Article
             <div className="text-white">
               {/* title */}
-              <h1 className="text-[4rem] text-left font-bold">{title}</h1>
+              <h1 className="text-[10rem] sm:text-[4rem] text-left font-bold">
+                {title}
+              </h1>
               {/* Summary */}
-              <div className="flex flex-col gap-[2rem] mt-[4rem]">
+              <div className="flex flex-col gap-[4rem] sm:gap-[2rem] mt-[4rem]">
                 {summary.map((item, index) => (
                   <p
                     key={index}
-                    className="text-gray-300 text-left text-[2.3rem]"
+                    className="text-gray-300 text-left text-[7rem] leading-[7.5rem] sm:text-[2.3rem] sm:leading-[2.5rem]"
                   >
                     {item}
                   </p>
@@ -128,19 +161,19 @@ function LurnyQuiz() {
             </div>
           )}
           {content === 1 && (
-            <div className="text-white rounded-[2rem] flex flex-col gap-[4rem] items-start">
+            <div className="text-white rounded-[2rem] flex flex-col gap-[12rem] sm:gap-[4rem] items-start">
               {/* Question */}
-              <p className=" text-left text-[3rem] font-semibold">
+              <p className=" text-left text-[10rem] sm:text-[4rem] leading-[10.5rem] sm:leading-[4.5rem] font-semibold">
                 Q{currentQuestionNumber + 1}:{" "}
                 {quiz[currentQuestionNumber].question}
               </p>
 
-              <div className="w-full flex flex-col gap-[2rem] items-start">
+              <div className="w-full flex flex-col gap-[4rem] sm:gap-[2rem] items-start">
                 {quiz[currentQuestionNumber].answer.map((answer, index) => (
                   // Answer
                   <div
                     className={classNames(
-                      "w-full flex justify-between items-center px-[2rem] py-[1rem] rounded-[1rem] text-left text-[2rem] cursor-pointer border",
+                      "w-full flex justify-between items-center px-[8rem] sm:px-[2rem] py-[4rem] sm:py-[1rem] rounded-[1rem] text-left text-[7rem] sm:text-[2rem] leading-[7.5rem] sm:leading-[2.5rem] cursor-pointer border",
                       answered
                         ? answerNumber === index
                           ? quiz[currentQuestionNumber].correctanswer ===
@@ -158,7 +191,7 @@ function LurnyQuiz() {
                     key={index}
                     onClick={() => !answered && setAnswerNumber(index)}
                   >
-                    <p className="flex">
+                    <p className="flex flex-1">
                       <span className="mr-[4rem]">
                         {String.fromCharCode(index + 65)}
                       </span>
@@ -172,15 +205,16 @@ function LurnyQuiz() {
                           onClick={() =>
                             setIsShowCorrectAnswer(!isShowCorrectAnswer)
                           }
-                          className="text-[4rem] my-auto right-4"
+                          className="text-[16rem] sm:text-[4rem] my-auto right-4"
                         />
                       )}
+                    <div></div>
                     <Tooltip
                       id="correct-answer"
                       place="bottom"
                       content={quiz[currentQuestionNumber].explanation}
                       style={{
-                        width: "500px",
+                        width: "300px",
                         textAlign: "justify",
                         backgroundColor: "#00B050",
                         color: "white",
@@ -194,21 +228,21 @@ function LurnyQuiz() {
               {!answered ? (
                 <button
                   onClick={() => setAnswered(true)}
-                  className="bg-[#FFC36D] text-[1.8rem] border-none focus:outline-none active:bg-yellow-300 text-black"
+                  className="bg-[#FFC36D] text-[6rem] sm:text-[1.8rem] border-none focus:outline-none active:bg-yellow-300 text-black"
                 >
                   SUBMIT ANSWER
                 </button>
               ) : currentQuestionNumber < quiz.length - 1 ? (
                 <button
                   onClick={handleNextQuiz}
-                  className="bg-[#FFC36D] text-[1.8rem] border-none focus:outline-none active:bg-yellow-300 text-black"
+                  className="bg-[#FFC36D] text-[6rem] sm:text-[1.8rem] border-none focus:outline-none active:bg-yellow-300 text-black"
                 >
                   NEXT QUESTION
                 </button>
               ) : (
                 <button
                   onClick={() => navigate("/lurny-category")}
-                  className="bg-[#FFC36D] text-[1.8rem] border-none focus:outline-none active:bg-yellow-300 text-black"
+                  className="bg-[#FFC36D] text-[6rem] sm:text-[1.8rem] border-none focus:outline-none active:bg-yellow-300 text-black"
                 >
                   GO TO HOME
                 </button>
@@ -306,15 +340,18 @@ function LurnyQuiz() {
         </div>
 
         {/* Right Panel */}
-        <div className="w-[32rem]">
+        <div className="w-full sm:w-[32rem] flex flex-wrap sm:gap-[4rem]">
           {/* Related Collections */}
-          <div className="flex flex-col items-start text-white">
-            <span className="text-start text-[3rem] font-bold">
+          <div className="w-1/2 sm:w-full flex flex-col items-start text-white">
+            <span className="text-start text-[8rem] sm:text-[3rem] font-bold">
               Related Collections
             </span>
-            <ul className="ml-[2rem]">
+            <ul className="ml-[6rem] sm:ml-[2rem]">
               {collections.map((keyword, index) => (
-                <li key={index} className="text-gray-300 text-left text-[2rem]">
+                <li
+                  key={index}
+                  className="text-gray-300 text-left text-[6rem] sm:text-[2rem]"
+                >
                   {keyword}
                 </li>
               ))}
@@ -322,8 +359,8 @@ function LurnyQuiz() {
           </div>
 
           {/* Related Lurnies */}
-          <div className="mt-[4rem] flex flex-col items-start text-white">
-            <span className="text-start text-[3rem] font-bold">
+          <div className="w-1/2 sm:w-full flex flex-col items-start text-white">
+            <span className="text-start text-[8rem] sm:text-[3rem] font-bold">
               Related Lurnies
             </span>
             {/* <div className="flex flex-col gap-[1.5rem]">

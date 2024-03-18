@@ -52,13 +52,6 @@ function LurnyItem({ data }) {
     return "No channel name or ID found in the URL";
   }
 
-  // Test the function with a URL
-  console.log(
-    extractChannelName(
-      "https://www.youtube.com/channel/UCBR8-60-B28hp2BmDPdntcQ"
-    )
-  );
-
   function getThumbnailURLFromVideoURL(videoURL) {
     const videoID = getYoutubeVideoID(videoURL);
     if (!videoID) {
@@ -71,23 +64,21 @@ function LurnyItem({ data }) {
   const newImg = getDefaultImg(image, url);
   const getCategory = isYoutubeUrl(url) ? extractChannelName(url) : "Category";
 
-  console.log(extractChannelName(url));
-
   return (
     <div
       onClick={handleClick}
-      className="h-[80rem] w-[80rem] sm:w-[48rem] sm:h-[48rem] lg:w-[32rem] lg:h-[32rem] cursor-pointer hover:scale-105 hover:duration-300"
+      className="w-[80rem] sm:w-[48rem] lg:w-[32rem] cursor-pointer hover:scale-105 hover:duration-300"
     >
       <img
         src={newImg}
         alt="lurny image"
-        className="h-3/5 w-full object-cover rounded-[2rem] sm:rounded-[1.5rem]"
+        className="h-[40rem] sm:h-[24rem] lg:h-[16rem] w-full object-cover rounded-[2rem] sm:rounded-[1.5rem]"
       />
       <div className="w-full flex flex-col text-white items-start gap-[2rem] sm:gap-[1rem] p-[4rem] sm:p-[2rem]">
         <span className="w-full text-start text-[5rem] sm:text-[3rem] lg:text-[1.2rem] font-semibold truncate">
           {getCategory}
         </span>
-        <div className="w-full text-[8rem] sm:text-[5rem] lg:text-[2rem] leading-[8.5rem] sm:leading-[6rem] lg:leading-[2.5rem] text-left font-medium line-clamp-3">
+        <div className="w-full text-[6rem] sm:text-[5rem] lg:text-[2rem] leading-[8.5rem] sm:leading-[6rem] lg:leading-[2.5rem] text-left font-medium  line-clamp-3 sm:line-clamp-2">
           {title}
         </div>
       </div>

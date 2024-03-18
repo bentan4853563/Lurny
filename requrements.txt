@@ -1,0 +1,7 @@
+- Finish the google chrome extension so that its available from google store
+
+
+- Finish the basic UI screens 
+  - [a] User profile page, where we should show how the lurnies get added when they lurnify a webpage or a video. When user clicks the DP image, user will come to this page. User will be able to share lurnies and these shared lurnies will be visible in Lurny listing page (see item 3 below)
+    [b] Google sign up and login. Other social media sign in - when can we do these, please let me know.
+    [c] Lurny listing page which will be the landing page when user logs into lurny. When user clicks on the lurny logo, user will go to this page.[d] Lurny search and result will be Lurny category page - here lurnies will be displayed per category[e] Each Lurny to have a distinct URL as discussed yesterday so that it will be SEO friendly.
