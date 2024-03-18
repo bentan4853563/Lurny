@@ -152,6 +152,7 @@ const LurnyUser = () => {
     await fetch(`${backend_url}/api/lurny/my-lurnies`, options)
       .then((response) => response.json()) // Parse JSON response
       .then((responseData) => {
+        console.log(responseData);
         setLurnies(responseData);
       })
       .catch((error) => {
@@ -192,29 +193,28 @@ const LurnyUser = () => {
         <div className="flex flex-col justify-between">
           <div className="flex flex-wrap justify-start gap-[8rem] lg:gap-[2rem]">
             {lurnies.length > 0 &&
-              lurnies.map(
-                (lurny, index) =>
-                  showAll && (
-                    <div key={index} className="">
-                      <LurnyItem data={lurny} />
-                      {lurny.shared ? (
-                        <div className="bg-[#00B050] py-[1rem] rounded-md text-white text-[6rem] sm:text-[2rem] cursor-pointer">
-                          Shared
-                        </div>
-                      ) : (
-                        <div
-                          className="bg-white px-[2rem] py-[0.8rem] rounded-md flex justify-between items-center text-black text-[2.2rem] cursor-pointer"
-                          onClick={() => handleShare(lurny._id)}
-                        >
-                          <TfiShare />
-                          <span className="flex flex-1 justify-center">
-                            Share with Community
-                          </span>
-                        </div>
-                      )}
+              lurnies.map((lurny, index) => (
+                <div key={index}>
+                  {(lurny.shared || showAll) && <LurnyItem data={lurny} />}
+                  {lurny.shared ? (
+                    <div className="bg-[#00B050] py-[1rem] rounded-md text-white text-[6rem] sm:text-[2rem] cursor-pointer">
+                      Shared
                     </div>
-                  )
-              )}
+                  ) : (
+                    showAll && (
+                      <div
+                        className="bg-white px-[2rem] py-[0.8rem] rounded-md flex justify-between items-center text-black text-[2.2rem] cursor-pointer"
+                        onClick={() => handleShare(lurny._id)}
+                      >
+                        <TfiShare />
+                        <span className="flex flex-1 justify-center">
+                          Share with Community
+                        </span>
+                      </div>
+                    )
+                  )}
+                </div>
+              ))}
           </div>
         </div>
       </div>

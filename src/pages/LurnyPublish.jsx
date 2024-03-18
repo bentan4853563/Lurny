@@ -9,11 +9,23 @@ import { useLurnyStore } from "../stores/lurnyStore";
 import LurnyHeader from "../components/LurnyHeader";
 import LurnyItem from "../components/LurnyItem";
 import FilterPan from "../components/FilterPan";
+import NewPagination from "../components/NewPagination";
 // import Pagination from "../components/Pagination";
 
 const LurnyPublish = () => {
   const { lurnies, setLurnies } = useLurnyStore();
   const [showFilter, setShowFilter] = useState(false);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(8); // Adjust as needed
+
+  // Get current items
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = lurnies.slice(indexOfFirstItem, indexOfLastItem);
+
+  // Change page
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   const backend_url = import.meta.env.VITE_BACKEND_URL;
 
@@ -45,7 +57,7 @@ const LurnyPublish = () => {
   return (
     <div className="w-[100vw] h-[100vh] font-raleway">
       <LurnyHeader />
-      <ToastContainer />
+      <ToastContainer className="text-start" />
       <div className="bg-[#2E2E2E] flex flex-col text-white py-[4rem] sm:py-[3rem] lg:py-[2rem]">
         <span className="text-[12rem] lg:text-[4rem] font-bold">
           All Lurnies
@@ -74,9 +86,9 @@ const LurnyPublish = () => {
           <FilterPan />
         </div>
 
-        <div className="flex flex-col justify-between">
+        <div className="w-full flex flex-col justify-between items-center">
           <div className="flex flex-wrap justify-start gap-[8rem] lg:gap-[2rem]">
-            {lurnies.map(
+            {currentItems.map(
               (lurny, index) =>
                 lurny.shared && <LurnyItem key={index} data={lurny} />
             )}
@@ -84,6 +96,12 @@ const LurnyPublish = () => {
           {/* <div className="flex justify-center mt-[4rem]">
             <Pagination />
           </div> */}
+          <NewPagination
+            totalItems={lurnies.length}
+            itemsPerPage={itemsPerPage}
+            currentPage={currentPage}
+            paginate={(value) => paginate(value)}
+          />
         </div>
       </div>
     </div>

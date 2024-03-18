@@ -1,5 +1,10 @@
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { auth } from "../firebase/config";
+
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 import {
   signInWithPopup,
   GoogleAuthProvider,
@@ -14,6 +19,7 @@ import signupImg from "../assets/images/signup.png";
 import letterLogo from "../assets/icons/letter_logo.png";
 
 const Signup = () => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
 
   function signUpWithGoogle() {
@@ -55,13 +61,17 @@ const Signup = () => {
         body: JSON.stringify({ accessToken }),
       });
 
-      const data = await response.json();
+      // const data = await response.json();
 
-      if (response.ok) {
-        alert("Signup successful:", data);
-        // Handle further logic such as redirecting to a dashboard or displaying the user info
+      if (response.ok && response.status == 201) {
+        toast.success("Signup successfuly. Please Signin.", {
+          position: "top-right",
+        });
+        navigate("/signin");
       } else {
-        throw new Error(data.message || "Signup failed");
+        toast.error("Already exist!", {
+          position: "top-right",
+        });
       }
     } catch (error) {
       alert("Error during signup:", error.message);
@@ -70,6 +80,7 @@ const Signup = () => {
 
   return (
     <div className="w-full min-h-[100vh] flex font-raleway">
+      <ToastContainer className="text-[2rem] text-start" />
       <div className="w-1/2 relative">
         <img
           src={signupImg}
@@ -82,7 +93,7 @@ const Signup = () => {
           className="absolute top-1/2 left-1/2 tansform -translate-x-1/2 -translate-y-1/2"
         />
       </div>
-      <div className="w-1/2 h-full px-[8rem] py-[12rem] flex flex-col gap-[6rem] items-center">
+      <div className="w-1/2 h-full px-[8rem] py-[12rem] flex flex-col gap-[6rem] justify-center items-center">
         <span className="text-white text-[3rem]">
           Sign in or create a new account
         </span>
@@ -125,6 +136,12 @@ const Signup = () => {
             <span>Continu with LinkedIn</span>
           </div>
         </div>
+        <Link
+          to="/signin"
+          className="w-full px-[12rem] text-start text-white text-[2rem] "
+        >
+          Sign in?
+        </Link>
         <span className="text-white text-[1.5rem] mt-[4rem]">
           By signing up to Lurny.net you consent and agree to Lurny’s privacy
           policy to store, manage and process your personal information. To read

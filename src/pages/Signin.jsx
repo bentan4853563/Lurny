@@ -4,6 +4,9 @@ import { GrGoogle } from "react-icons/gr";
 import { FaFacebookSquare } from "react-icons/fa";
 import { FaLinkedin } from "react-icons/fa";
 
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 import { auth } from "../firebase/config";
 import {
   signInWithPopup,
@@ -14,18 +17,14 @@ import {
 export default function Signin() {
   const navigate = useNavigate();
 
-  async function handleProviderSignIn(provider) {
+  async function signInWithGoogle() {
+    const provider = new GoogleAuthProvider();
     try {
       const result = await signInWithPopup(auth, provider);
-      await signIn(result.user.accessToken); // Assuming accessToken is available on the user object for both providers
+      await signIn(result.user.accessToken);
     } catch (error) {
       console.log(error);
     }
-  }
-
-  function signInWithGoogle() {
-    const provider = new GoogleAuthProvider();
-    handleProviderSignIn(provider);
   }
 
   function signInWithFacebook() {
@@ -53,12 +52,25 @@ export default function Signin() {
       });
 
       if (response.ok) {
-        console.log(response);
         const data = await response.json();
         handleSuccessfulLogin(data.token);
         // Handle further logic such as redirecting to a dashboard or displaying the user info
       } else {
-        throw new Error("Signin failed");
+        if (response.status == 404) {
+          toast.error("Please signup first!", {
+            position: "top-right",
+            onClose: () => navigate("/signup"), // Navigate after the toast is dismissed
+          });
+
+          // Optionally, navigate after a delay even if Toast hasn't been manually closed
+          setTimeout(() => {
+            navigate("/signup");
+          }, 3000);
+        } else {
+          toast.error(response.error, {
+            position: "top-right",
+          });
+        }
       }
     } catch (error) {
       alert("Error during signup:", error.message);
@@ -66,13 +78,14 @@ export default function Signin() {
   }
 
   const handleSuccessfulLogin = (token) => {
-    console.log("456789");
     sessionStorage.setItem("token", token);
     navigate("/lurny-category");
   };
 
   return (
     <div className="w-[100vw] h-[100vh] bg-black flex items-center justify-center">
+      <ToastContainer className="text-[2rem] text-start" />
+
       <div className="w-[160rem] sm:w-[120rem] md:w-[80rem] lg:w-[48rem] xl:w-[40rem] px-[8rem] sm:px-[4rem] xl:px-[2.5rem] py-[16rem] sm:py-[8rem] xl:py-[4rem] bg-white flex flex-col items-start gap-[10rem] md:gap-[6rem] xl:gap-[2.5rem] text-black rounded-[4rem] sm:rounded-[2rem] relative">
         <IoClose className="absolute top-[4rem] sm:top-[2rem] right-[4rem] sm:right-[2rem] text-black text-[10rem] sm:text-[8rem] md:text-[4rem] lg:text-[2.5rem] xl:text-[2rem] cursor-pointer" />
         <h1 className="text-black text-[16rem] sm-[text-12rem] md:text-[6rem] lg:text-[5rem] xl:text-[3rem] font-bold">
@@ -85,21 +98,21 @@ export default function Signin() {
         <div className="flex flex-col gap-[4rem] sm:gap-[3rem] md:gap-[2rem] xl:gap-[1rem] text-black text-[10rem] sm:text-[8rem] md:text-[4rem] lg:text-[2.5rem] xl:text-[2rem]">
           <div className="flex items-center gap-[2rem] px-[4rem] sm:px-[1rem] py-[0.5rem] border border-gray-300 outline-none hover:border-[#7F52BB] rounded-md cursor-pointer ">
             <FaLinkedin />
-            <span>Continu with LinkedIn</span>
+            <span>Continue with LinkedIn</span>
           </div>
           <div
             onClick={signInWithGoogle}
             className=" flex items-center gap-[2rem] px-[4rem] sm:px-[1rem] py-[0.5rem] border border-gray-300 outline-none hover:border-[#7F52BB] rounded-md cursor-pointer hover:"
           >
             <GrGoogle />
-            <span className="text-black">Continu with Goggle</span>
+            <span className="text-black">Continue with Goggle</span>
           </div>
           <div
             onClick={signInWithFacebook}
             className="flex items-center gap-[2rem] px-[4rem] sm:px-[1rem] py-[0.5rem] border border-gray-300 outline-none hover:border-[#7F52BB] rounded-md cursor-pointer hover:"
           >
             <FaFacebookSquare />
-            <span>Continu with LinkedIn</span>
+            <span>Continue with LinkedIn</span>
           </div>
         </div>
         <p className="text-left text-[6rem] sm:text-[4rem] md:text-[2.5rem] lg:text-[2rem] xl:text-[1.5rem]">

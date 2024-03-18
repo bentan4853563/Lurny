@@ -15,6 +15,7 @@ import LurnyQuiz from "./pages/LurnyQuiz";
 import LurnyPublish from "./pages/LurnyPublish";
 import LurnyUser from "./pages/LurnyUser";
 import { useEffect } from "react";
+import LurnySearch from "./pages/LurnySearch";
 // import LurnySearch from "./pages/LurnySearch";
 
 const ProtectedRoute = () => {
@@ -59,7 +60,8 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/lurny-list" element={<LurnyPublish />} />
             <Route path="/lurny-category" element={<LurnyUser />} />
-            <Route path="/lurny-quiz" element={<LurnyQuiz />} />
+            <Route path="/lurny-quiz/:url" element={<LurnyQuiz />} />
+            <Route path="/lurny-search" element={<LurnySearch />} />
           </Route>
           <Route path="/signin" element={<Signin />} />
           <Route path="/signup" element={<Signup />} />

@@ -1,8 +1,11 @@
 // import PropTypes from "prop-types";
 
 import { useEffect, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { Tooltip } from "react-tooltip";
+import { jwtDecode } from "jwt-decode";
+
+import { useLurnyStore } from "../stores/lurnyStore";
 
 import { IoMenu } from "react-icons/io5";
 import { IoIosArrowBack } from "react-icons/io";
@@ -13,25 +16,69 @@ import "@szhsin/react-menu/dist/index.css";
 import "@szhsin/react-menu/dist/transitions/slide.css";
 
 import LetterLogo from "../assets/icons/letter_logo.png";
-import userImg from "../assets/images/home/User.png";
 
 function LurnyQuiz() {
   const navigate = useNavigate();
-  const location = useLocation();
 
-  const [quizData, setQuizData] = useState({
-    title: "",
-    summary: [],
-    quiz: [],
-    newImg: "",
-    collections: [],
-    url: "",
-  });
+  const backend_url = import.meta.env.VITE_BACKEND_URL;
+
+  const { lurnies, setLurnies } = useLurnyStore();
+
+  const [userData, setUserData] = useState(null);
+  const [quizData, setQuizData] = useState({});
+
   const [content, setContent] = useState(0);
   const [currentQuestionNumber, setCurrentQuestionNumber] = useState(0);
   const [answerNumber, setAnswerNumber] = useState(null);
   const [answered, setAnswered] = useState(false);
   const [isShowCorrectAnswer, setIsShowCorrectAnswer] = useState(false);
+
+  let { url } = useParams();
+
+  useEffect(() => {
+    let decodedUrl = decodeURIComponent(url);
+    if (lurnies.length > 0 && decodedUrl) {
+      const currentLurny = lurnies.find((lurny) => lurny.url === decodedUrl);
+      if (currentLurny) {
+        setQuizData(currentLurny);
+      }
+    }
+  }, [lurnies, url]);
+
+  useEffect(() => {
+    const accessToken = sessionStorage.getItem("token");
+    if (accessToken) {
+      setUserData(jwtDecode(accessToken));
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!lurnies || lurnies.length == 0) {
+      getLurnies();
+    }
+  }, [lurnies]);
+
+  const getLurnies = async () => {
+    console.log("Get Lurnies");
+    const options = {
+      method: "GET", // Request method
+      headers: {
+        "Content-Type": "application/json", // Indicate JSON content
+      },
+    };
+
+    await fetch(`${backend_url}/api/lurny/get`, options)
+      .then((response) => response.json()) // Parse JSON response
+      .then((responseData) => {
+        setLurnies(responseData);
+      })
+      .catch((error) => {
+        console.error("Error:", error); // Handle errors
+        // toast.error(`Error! \n${error}`, {
+        //   position: "top-right",
+        // });
+      });
+  };
 
   useEffect(() => {
     setAnswerNumber(null);
@@ -42,14 +89,7 @@ function LurnyQuiz() {
     setCurrentQuestionNumber(0);
   }, [content]);
 
-  useEffect(() => {
-    if (location.state) {
-      console.log("lsdkfjlsdfj");
-      setQuizData(location.state);
-    }
-  }, [location.state]);
-
-  const { title, summary, quiz, newImg, collections, url } = quizData;
+  const { title, summary, quiz, collections } = quizData;
 
   const buttons = ["Read Full Article", "Quiz Me!", "Remember this"];
 
@@ -111,12 +151,14 @@ function LurnyQuiz() {
           </button>
         </div>
         <div className="flex items-center gap-[8rem] lg:gap-[2rem]">
-          <img
-            src={userImg}
-            alt="Chrome Icon"
-            onClick={() => navigate("/lurny-category")}
-            className="w-[16rem] sm:w-[12rem] md:w-[10rem] lg:w-[8rem] xl:w-[6rem] rounded-[100%] cursor-pointer"
-          />
+          {userData && (
+            <img
+              src={userData.photoURL}
+              alt="Chrome Icon"
+              onClick={() => navigate("/lurny-category")}
+              className="w-[16rem] sm:w-[12rem] md:w-[10rem] lg:w-[8rem] xl:w-[6rem] rounded-[100%] cursor-pointer"
+            />
+          )}
           <IoMenu className="text-[16rem] sm:text-[10rem] md:text-[8rem] lg:text-[6rem] xl:text-[4rem] text-gray-500 cursor-pointer" />
         </div>
       </div>
@@ -126,14 +168,14 @@ function LurnyQuiz() {
         {/* Image */}
         <div className="w-full sm:w-[32rem] px-[16rem] sm:px-0 flex flex-col items-start">
           <a
-            href={url}
+            href={quizData.url}
             target="black"
             className="text-white text-start text-[7rem] sm:text-[2.5rem] hover:text-sky-500"
           >
             View Original
           </a>
           <img
-            src={newImg}
+            src={quizData.image}
             alt=""
             className="w-full h-[64rem] sm:h-[20rem] object-cover rounded-[2rem]"
           />
@@ -149,14 +191,16 @@ function LurnyQuiz() {
               </h1>
               {/* Summary */}
               <div className="flex flex-col gap-[4rem] sm:gap-[2rem] mt-[4rem]">
-                {summary.map((item, index) => (
-                  <p
-                    key={index}
-                    className="text-gray-300 text-left text-[7rem] leading-[7.5rem] sm:text-[2.3rem] sm:leading-[2.5rem]"
-                  >
-                    {item}
-                  </p>
-                ))}
+                {summary &&
+                  summary.length > 0 &&
+                  summary.map((item, index) => (
+                    <p
+                      key={index}
+                      className="text-gray-300 text-left text-[7rem] leading-[7.5rem] sm:text-[2.3rem] sm:leading-[2.5rem]"
+                    >
+                      {item}
+                    </p>
+                  ))}
               </div>
             </div>
           )}
@@ -347,14 +391,16 @@ function LurnyQuiz() {
               Related Collections
             </span>
             <ul className="ml-[6rem] sm:ml-[2rem]">
-              {collections.map((keyword, index) => (
-                <li
-                  key={index}
-                  className="text-gray-300 text-left text-[6rem] sm:text-[2rem]"
-                >
-                  {keyword}
-                </li>
-              ))}
+              {collections &&
+                collections.length > 0 &&
+                collections.map((keyword, index) => (
+                  <li
+                    key={index}
+                    className="text-gray-300 text-left text-[6rem] sm:text-[2rem]"
+                  >
+                    {keyword}
+                  </li>
+                ))}
             </ul>
           </div>
 
