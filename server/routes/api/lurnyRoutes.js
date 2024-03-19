@@ -17,7 +17,7 @@ router.get("/get", async (req, res) => {
 router.post("/my-lurnies", async (req, res) => {
   try {
     const lurnies = await Lurny.find({ user: req.body.user }).sort({
-      date: 1,
+      date: -1,
       shared: 1,
     });
     res.json(lurnies);
@@ -29,9 +29,7 @@ router.post("/my-lurnies", async (req, res) => {
 router.post("/insert", async (req, res) => {
   try {
     const newLurny = new Lurny(req.body);
-    console.log(newLurny);
     const savedLurny = await newLurny.save();
-    console.log("savedLurny");
     res.status(201).json(savedLurny);
   } catch (error) {
     res.status(400).json({ message: error.message });

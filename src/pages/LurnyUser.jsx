@@ -15,7 +15,7 @@ import UserPan from "../components/UserPan";
 import NewPagination from "../components/NewPagination";
 
 const LurnyUser = () => {
-  const { lurnies, addLurny, setLurnies, shareLurny } = useLurnyStore();
+  const { lurnies, setLurnies, shareLurny } = useLurnyStore();
   const [tempData, setTempData] = useState(null);
   const [showSidePan, setShowSidePan] = useState(false);
   const [userData, setUserData] = useState(null);
@@ -40,14 +40,20 @@ const LurnyUser = () => {
   // const backend_url = "https://6faf-88-99-162-157.ngrok-free.app";
   const backend_url = import.meta.env.VITE_BACKEND_URL;
 
-  useEffect(() => {
-    if (userData) {
-      myLurnies();
-    }
-  }, [userData]);
+  // useEffect(() => {
+  //   myLurnies();
+  // }, []);
+
+  // useEffect(() => {
+  //   clearLurnies();
+  //   if (userData) {
+  //     myLurnies();
+  //   }
+  // }, [userData]);
 
   useEffect(() => {
     if (localStorage.getItem("tempData")) {
+      console.log("tempData", localStorage.getItem("tempData"));
       setTempData(localStorage.getItem("tempData"));
       localStorage.removeItem("tempData");
     }
@@ -111,8 +117,9 @@ const LurnyUser = () => {
     await fetch(`${backend_url}/api/lurny/insert`, options)
       .then((response) => response.json()) // Parse JSON response
       .then((responseData) => {
-        console.log(responseData);
-        addLurny(responseData);
+        console.log("responseData", responseData);
+        // addLurny(responseData);
+        myLurnies();
         toast.success("Inserted!", {
           position: "top-right",
         });
@@ -131,6 +138,7 @@ const LurnyUser = () => {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
+          "ngrok-skip-browser-warning": true,
         },
       });
       if (response.ok) {
@@ -201,7 +209,7 @@ const LurnyUser = () => {
           className={`${showSidePan ? "absolute" : "hidden"} sm:block`}
         ></div>
         <div className="w-full flex flex-col justify-between  items-center">
-          <div className="flex flex-wrap justify-start gap-[8rem] lg:gap-[2rem]">
+          <div className="w-full flex flex-wrap justify-start gap-[8rem] lg:gap-[2rem]">
             {currentItems.length > 0 &&
               currentItems.map((lurny, index) => (
                 <div key={index}>

@@ -16,6 +16,7 @@ import LurnyPublish from "./pages/LurnyPublish";
 import LurnyUser from "./pages/LurnyUser";
 import { useEffect } from "react";
 import LurnySearch from "./pages/LurnySearch";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
 // import LurnySearch from "./pages/LurnySearch";
 
 const ProtectedRoute = () => {
@@ -24,22 +25,21 @@ const ProtectedRoute = () => {
   }
   return <Outlet />;
 };
-
 function App() {
   useEffect(() => {
+    console.log("Refresh");
     const handleMessage = (event) => {
-      const trustedOrigin = "http://localhost:3000";
-
+      const trustedOrigin = "https://eab6-88-99-162-157.ngrok-free.app";
       // Validate the event origin and the message type.
       if (
         event.origin === trustedOrigin &&
         event.data.type &&
         event.data.type === "FROM_EXTENSION"
       ) {
-        console.log("Receive data", event.data.data);
-
+        console.log("Receive data1", event.data.data);
         // Store the received data until the user is signed in
         localStorage.setItem("tempData", JSON.stringify(event.data.data));
+        console.log("Receive data2", event.data.data);
       }
     };
 
@@ -65,6 +65,7 @@ function App() {
           </Route>
           <Route path="/signin" element={<Signin />} />
           <Route path="/signup" element={<Signup />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         </Routes>
       </Router>
     </>

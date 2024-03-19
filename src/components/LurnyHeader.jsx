@@ -51,7 +51,9 @@ export default function LurnyHeader() {
             className="w-[16rem] sm:w-[12rem] md:w-[10rem] lg:w-[8rem] xl:w-[4rem] rounded-[100%]"
           />
         </Link> */}
-        <ImSearch className="text-[16rem] sm:text-[10rem] md:text-[8rem] lg:text-[6rem] xl:text-[3rem] text-gray-500 cursor-pointer" />
+        <Link to="/lurny-search">
+          <ImSearch className="text-[16rem] sm:text-[10rem] md:text-[8rem] lg:text-[6rem] xl:text-[3rem] text-gray-500 cursor-pointer" />
+        </Link>
 
         <Link to="/lurny-category" className="felx items-center">
           {userData && (

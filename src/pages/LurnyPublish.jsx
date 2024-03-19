@@ -15,13 +15,21 @@ import NewPagination from "../components/NewPagination";
 const LurnyPublish = () => {
   const { lurnies, setLurnies } = useLurnyStore();
   const [showFilter, setShowFilter] = useState(false);
+  const [filteredLurnies, setFilteredLurnies] = useState([]);
+  const [selectedCategories, setSelectedCategories] = useState(["All"]);
+  const [selectedMedias, setSelectedMedias] = useState([]); // Assuming "Video" is another possible type
+  const [searchTerm, setSearchTerm] = useState("");
 
+  const [categories, setCategories] = useState([{ category: "", count: 0 }]);
+  const [media, setMedia] = useState([{ media: "", count: 0 }]);
+
+  // Pagenation state
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(8); // Adjust as needed
   // Get current items
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = lurnies.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = filteredLurnies.slice(indexOfFirstItem, indexOfLastItem);
   // Change page
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
@@ -31,11 +39,88 @@ const LurnyPublish = () => {
     getLurnies();
   }, []);
 
+  // set media
+  useEffect(() => {
+    if (lurnies.length > 0) {
+      const newMedia = lurnies.reduce((accumulator, lurny) => {
+        const mediaType = isYoutubeUrl(lurny.url) ? "Video" : "Web Page"; // Replace "Other" with appropriate default type
+        const existingMedia = accumulator.find((m) => m.media === mediaType);
+        if (existingMedia) {
+          existingMedia.count++;
+        } else {
+          accumulator.push({ media: mediaType, count: 1 });
+        }
+        return accumulator;
+      }, []);
+      setMedia(newMedia);
+      setSelectedMedias(newMedia.map((m) => m.media));
+    }
+  }, [lurnies]);
+
+  useEffect(() => {
+    const categoryMatchesSearchTerm = (category) =>
+      category.toLowerCase().includes(searchTerm.toLowerCase());
+    const newCategories = lurnies
+      .filter((lurny) => {
+        // First, check if the lurny matches the selected media types
+        const isYoutube = isYoutubeUrl(lurny.url);
+        const matchesMedias = selectedMedias.includes(
+          isYoutube ? "Video" : "Web Page"
+        );
+        return matchesMedias;
+      })
+      .reduce((accumulator, lurny) => {
+        // Then, go through each collection/category in the lurny
+        lurny.collections.forEach((category) => {
+          if (!categoryMatchesSearchTerm(category)) {
+            return;
+          }
+
+          // Find if the category already exists in the accumulator
+          const existingCategory = accumulator.find(
+            (c) => c.category === category
+          );
+
+          if (existingCategory) {
+            // Increment count if category already exists
+            existingCategory.count++;
+          } else {
+            // Otherwise, add a new category with count 1 to the accumulator
+            accumulator.push({ category: category, count: 1 });
+          }
+        });
+
+        return accumulator;
+      }, []);
+
+    setCategories(newCategories);
+  }, [selectedMedias, searchTerm, lurnies]);
+
+  useEffect(() => {
+    const filterByCategoryAndMedia = (lurny) => {
+      const matchesCategories =
+        selectedCategories.includes("All") ||
+        lurny.collections.some((category) =>
+          selectedCategories.includes(category)
+        );
+
+      const isYoutube = isYoutubeUrl(lurny.url);
+      const matchesMedias = selectedMedias.includes(
+        isYoutube ? "Video" : "Web Page"
+      );
+
+      return matchesCategories && matchesMedias;
+    };
+
+    setFilteredLurnies(lurnies.filter(filterByCategoryAndMedia));
+  }, [selectedCategories, selectedMedias, lurnies]);
+
   const getLurnies = async () => {
     const options = {
       method: "GET", // Request method
       headers: {
         "Content-Type": "application/json", // Indicate JSON content
+        "ngrok-skip-browser-warning": true,
       },
     };
 
@@ -50,6 +135,10 @@ const LurnyPublish = () => {
         //   position: "top-right",
         // });
       });
+  };
+
+  const isYoutubeUrl = (url) => {
+    return url.includes("youtube.com") || url.includes("youtu.be");
   };
 
   return (
@@ -81,21 +170,26 @@ const LurnyPublish = () => {
 
         {/* FilterPan is hidden on small screens initially */}
         <div className={`${showFilter ? "absolute" : "hidden"} sm:block`}>
-          <FilterPan />
+          <FilterPan
+            media={media}
+            changeMedia={(selectedItems) => setSelectedMedias(selectedItems)}
+            categories={categories}
+            changeCategory={(selectedItems) =>
+              setSelectedCategories(selectedItems)
+            }
+            searchCategory={(value) => setSearchTerm(value)}
+          />
         </div>
 
-        <div className="w-full flex flex-col justify-between items-center">
+        <div className="w-full flex flex-col justify-between items-start">
           <div className="flex flex-wrap justify-start gap-[8rem] lg:gap-[2rem]">
             {currentItems.map(
               (lurny, index) =>
                 lurny.shared && <LurnyItem key={index} data={lurny} />
             )}
           </div>
-          {/* <div className="flex justify-center mt-[4rem]">
-            <Pagination />
-          </div> */}
           <NewPagination
-            totalItems={lurnies.length}
+            totalItems={filteredLurnies.length}
             itemsPerPage={itemsPerPage}
             currentPage={currentPage}
             paginate={(value) => paginate(value)}

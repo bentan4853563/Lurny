@@ -59,6 +59,7 @@ const Signup = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "ngrok-skip-browser-warning": true,
         },
         body: JSON.stringify({ accessToken }),
       });
@@ -145,9 +146,9 @@ const Signup = () => {
           Sign in?
         </Link>
         <span className="text-white text-[1.5rem] mt-[4rem]">
-          By signing up to Lurny.net you consent and agree to Lurny’s privacy
-          policy to store, manage and process your personal information. To read
-          more, please see
+          By signing up to Lurny.net you consent and agree to Lurny&asquo;s
+          <Link to="/privacy-policy">privacy policy</Link> to store, manage and
+          process your personal information. To read more, please see
         </span>
       </div>
     </div>

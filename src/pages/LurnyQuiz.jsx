@@ -64,6 +64,7 @@ function LurnyQuiz() {
       method: "GET", // Request method
       headers: {
         "Content-Type": "application/json", // Indicate JSON content
+        "ngrok-skip-browser-warning": true,
       },
     };
 

@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { IoClose } from "react-icons/io5";
 import { GrGoogle } from "react-icons/gr";
 import { FaFacebookSquare } from "react-icons/fa";
@@ -18,6 +18,17 @@ export default function Signin() {
   const navigate = useNavigate();
 
   const backend_url = import.meta.env.VITE_BACKEND_URL;
+
+  // const signInWithGoogle = useGoogleLogin({
+  //   redirect_uri: "https://eab6-88-99-162-157.ngrok-free.app/category-list",
+  //   onSuccess: (codeResponse) => {
+  //     const { access_token } = codeResponse;
+  //     signIn(access_token);
+  //   },
+  //   onError: (error) => {
+  //     console.log(error);
+  //   },
+  // });
 
   async function signInWithGoogle() {
     const provider = new GoogleAuthProvider();
@@ -49,6 +60,7 @@ export default function Signin() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "ngrok-skip-browser-warning": true,
         },
         body: JSON.stringify({ accessToken }),
       });
@@ -120,7 +132,8 @@ export default function Signin() {
         <p className="text-left text-[6rem] sm:text-[4rem] md:text-[2.5rem] lg:text-[2rem] xl:text-[1.5rem]">
           By signing up to <b>Lurny.net</b> you consent and agree to Lurny’s
           privacy policy to store, anage and process your personal information.
-          To read more, please see <b>our privacy policy</b> here.
+          To read more, please see our{" "}
+          <Link to="/privacy-policy">privacy policy</Link> here.
         </p>
       </div>
     </div>

@@ -11,4 +11,5 @@ export const useLurnyStore = create((set) => ({
         item._id === id ? { ...item, shared: true } : item
       ),
     })),
+  clearLurnies: () => set({ lurnies: [] }),
 }));

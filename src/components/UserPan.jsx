@@ -31,7 +31,7 @@ function UserPan({ all, saved, showAll }) {
         the final months of the year, driven by strong private investments and a
         pickup in the services sector.
       </p>
-      <button className="bg-white text-[2rem] font-semibold focus:outline-none">
+      <button className="bg-white text-black text-[2rem] font-semibold focus:outline-none">
         Settings
       </button>
       <span

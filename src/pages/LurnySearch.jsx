@@ -10,6 +10,7 @@ import { useLurnyStore } from "../stores/lurnyStore";
 import LurnyHeader from "../components/LurnyHeader";
 import LurnyItem from "../components/LurnyItem";
 import CategoryPan from "../components/CatetoryPan";
+import NewPagination from "../components/NewPagination";
 // import Pagination from "../components/Pagination";
 
 const LurnySearch = () => {
@@ -17,6 +18,16 @@ const LurnySearch = () => {
   const [showFilter, setShowFilter] = useState(false);
   const [searchTerm, setSearchTerm] = useState(""); // State to hold the search term
   const [filteredLurnies, setFilteredLurnies] = useState([]);
+
+  // Pagenation state
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(8); // Adjust as needed
+  // Get current items
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = filteredLurnies.slice(indexOfFirstItem, indexOfLastItem);
+  // Change page
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   const backend_url = import.meta.env.VITE_BACKEND_URL;
 
@@ -41,6 +52,7 @@ const LurnySearch = () => {
       method: "GET", // Request method
       headers: {
         "Content-Type": "application/json", // Indicate JSON content
+        "ngrok-skip-browser-warning": true,
       },
     };
 
@@ -58,7 +70,7 @@ const LurnySearch = () => {
   };
 
   return (
-    <div className="w-[100vw] h-[100vh] font-raleway">
+    <div className="h-[100vh] w-[100vw] font-raleway">
       <LurnyHeader />
       <ToastContainer className="text-start" />
 
@@ -96,15 +108,18 @@ const LurnySearch = () => {
 
           <div className="flex flex-col justify-between">
             <div className="flex flex-wrap justify-start gap-[8rem] lg:gap-[2rem]">
-              {filteredLurnies.length > 0 &&
-                filteredLurnies.map(
+              {currentItems.length > 0 &&
+                currentItems.map(
                   (lurny, index) =>
                     lurny.shared && <LurnyItem key={index} data={lurny} />
                 )}
             </div>
-            {/* <div className="flex justify-center mt-[4rem]">
-            <Pagination />
-          </div> */}
+            <NewPagination
+              totalItems={filteredLurnies.length}
+              itemsPerPage={itemsPerPage}
+              currentPage={currentPage}
+              paginate={(value) => paginate(value)}
+            />
           </div>
         </div>
       </div>

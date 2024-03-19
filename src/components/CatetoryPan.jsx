@@ -2,12 +2,6 @@ import AvatarGroup from "react-avatar-group";
 // import icon from "../assets/icons/play.png";
 
 export default function CategoryPan() {
-  // const data = [
-  //   { name: "Alex", src: { icon } },
-  //   { name: "Alex", src: { icon } },
-  //   { name: "Alex", src: { icon } },
-  // ];
-
   return (
     <div className="w-[140rem] sm:w-[72rem] lg:w-[30rem] bg-[#262626] flex flex-col shrink-0 items-start gap-[8rem]">
       <div className="flex flex-col items-start gap-[2rem]">
