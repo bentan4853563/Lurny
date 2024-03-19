@@ -114,7 +114,7 @@ const LurnyPublish = () => {
 
     const sortByCategory = (a, b) => {
       const categoryA = a.collections[0].toLowerCase();
-      const categoryB = b.collection[0].toLowerCase();
+      const categoryB = b.collections[0].toLowerCase(); // Corrected typo here
       if (categoryA < categoryB) {
         return -1;
       }
@@ -123,9 +123,10 @@ const LurnyPublish = () => {
       }
       return 0;
     };
+
     const filteredAndSortedLurnies = lurnies
       .filter(filterByCategoryAndMedia)
-      .sort(sortByCategory);
+      .sort(sortByCategory); // Corrected method call here
 
     setFilteredLurnies(filteredAndSortedLurnies);
   }, [selectedCategories, selectedMedias, lurnies]);

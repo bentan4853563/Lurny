@@ -41,10 +41,6 @@ const LurnyUser = () => {
   const backend_url = import.meta.env.VITE_BACKEND_URL;
 
   // useEffect(() => {
-  //   myLurnies();
-  // }, []);
-
-  // useEffect(() => {
   //   clearLurnies();
   //   if (userData) {
   //     myLurnies();
@@ -56,6 +52,8 @@ const LurnyUser = () => {
       console.log("tempData", localStorage.getItem("tempData"));
       setTempData(localStorage.getItem("tempData"));
       localStorage.removeItem("tempData");
+    } else {
+      myLurnies();
     }
   }, []);
 
