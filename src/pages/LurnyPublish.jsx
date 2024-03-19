@@ -112,7 +112,22 @@ const LurnyPublish = () => {
       return matchesCategories && matchesMedias;
     };
 
-    setFilteredLurnies(lurnies.filter(filterByCategoryAndMedia));
+    const sortByCategory = (a, b) => {
+      const categoryA = a.collections[0].toLowerCase();
+      const categoryB = b.collection[0].toLowerCase();
+      if (categoryA < categoryB) {
+        return -1;
+      }
+      if (categoryA > categoryB) {
+        return 1;
+      }
+      return 0;
+    };
+    const filteredAndSortedLurnies = lurnies
+      .filter(filterByCategoryAndMedia)
+      .sort(sortByCategory);
+
+    setFilteredLurnies(filteredAndSortedLurnies);
   }, [selectedCategories, selectedMedias, lurnies]);
 
   const getLurnies = async () => {
