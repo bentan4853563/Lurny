@@ -29,7 +29,7 @@ function App() {
   useEffect(() => {
     console.log("Refresh");
     const handleMessage = (event) => {
-      const trustedOrigin = "https://eab6-88-99-162-157.ngrok-free.app";
+      const trustedOrigin = "ec2-3-84-247-235.compute-1.amazonaws.com:3000";
       // Validate the event origin and the message type.
       if (
         event.origin === trustedOrigin &&
