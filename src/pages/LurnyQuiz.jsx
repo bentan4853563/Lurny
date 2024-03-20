@@ -146,6 +146,7 @@ function LurnyQuiz() {
 
   function getYoutubeVideoID(url) {
     const regExp =
+      // eslint-disable-next-line no-useless-escape
       /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=|shorts\/)([^#\&\?]*).*/;
     const match = url.match(regExp);
     return match && match[2].length === 11 ? match[2] : null;
@@ -473,7 +474,9 @@ function LurnyQuiz() {
                 collections.length > 0 &&
                 collections.slice(0, 9).map((keyword, index) => (
                   <li
-                    onClick={() => navigate("/lurny/list")}
+                    onClick={() =>
+                      navigate("/lurny/list", { category: keyword })
+                    }
                     key={index}
                     className="text-gray-300 text-left text-[6rem] sm:text-[2rem] cursor-pointer"
                   >

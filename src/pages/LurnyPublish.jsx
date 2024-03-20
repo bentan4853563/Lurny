@@ -10,9 +10,12 @@ import LurnyHeader from "../components/LurnyHeader";
 import LurnyItem from "../components/LurnyItem";
 import FilterPan from "../components/FilterPan";
 import NewPagination from "../components/NewPagination";
+import { useLocation } from "react-router-dom";
 // import Pagination from "../components/Pagination";
 
 const LurnyPublish = () => {
+  const location = useLocation();
+
   const { lurnies, setLurnies, clearLurnies } = useLurnyStore();
   const [showFilter, setShowFilter] = useState(false);
   const [filteredLurnies, setFilteredLurnies] = useState([]);
@@ -41,6 +44,13 @@ const LurnyPublish = () => {
       clearLurnies();
     };
   }, []);
+
+  useEffect(() => {
+    if (location.state) {
+      console.log(location.state.category);
+      setSelectedCategories(location.state.category);
+    }
+  }, [location]);
 
   // set media
   useEffect(() => {
@@ -165,9 +175,14 @@ const LurnyPublish = () => {
       <LurnyHeader />
       <ToastContainer className="text-start" />
       <div className="bg-[#2E2E2E] flex flex-col text-white py-[4rem] sm:py-[3rem] lg:py-[2rem]">
-        <span className="text-[12rem] lg:text-[4rem] font-bold">
-          All Lurnies
-        </span>
+        <dov className="text-[12rem] lg:text-[4rem] font-bold">
+          {selectedCategories.length > 0 &&
+            selectedCategories.map((category, index) => (
+              <span key={index} className="flex flex-wrap gap-[2rem]">
+                {category}
+              </span>
+            ))}
+        </dov>
         <span className="text-[8rem] lg:text-[2.5rem] font-medium">
           {lurnies.length} Lurnies and counting…
         </span>
