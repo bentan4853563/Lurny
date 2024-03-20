@@ -6,7 +6,6 @@ const useAuth = () => {
   useEffect(() => {
     const token = sessionStorage.getItem("token");
     setIsAuthenticated(!!token);
-    console.log(!!token);
   }, []);
 
   return isAuthenticated;

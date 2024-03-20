@@ -93,6 +93,7 @@ export default function Signin() {
 
   const handleSuccessfulLogin = (token) => {
     sessionStorage.setItem("token", token);
+    console.log("token", token);
     navigate("/lurny-category");
   };
 
