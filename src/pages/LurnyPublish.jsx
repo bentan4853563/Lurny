@@ -209,7 +209,7 @@ const LurnyPublish = () => {
           <FilterPan
             media={media}
             changeMedia={(selectedItems) => setSelectedMedias(selectedItems)}
-            categories={categories}
+            categories={selectedCategories}
             changeCategory={(selectedItems) =>
               setSelectedCategories(selectedItems)
             }
