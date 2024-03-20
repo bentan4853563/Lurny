@@ -13,7 +13,7 @@ import NewPagination from "../components/NewPagination";
 // import Pagination from "../components/Pagination";
 
 const LurnyPublish = () => {
-  const { lurnies, setLurnies } = useLurnyStore();
+  const { lurnies, setLurnies, clearLurnies } = useLurnyStore();
   const [showFilter, setShowFilter] = useState(false);
   const [filteredLurnies, setFilteredLurnies] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState(["All"]);
@@ -37,6 +37,9 @@ const LurnyPublish = () => {
 
   useEffect(() => {
     getLurnies();
+    return () => {
+      clearLurnies();
+    };
   }, []);
 
   // set media

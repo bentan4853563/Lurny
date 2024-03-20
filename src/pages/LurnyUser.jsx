@@ -36,6 +36,9 @@ const LurnyUser = () => {
     if (accessToken) {
       setUserData(jwtDecode(accessToken));
     }
+    return () => {
+      clearLurnies();
+    };
   }, []);
 
   // const backend_url = "https://6faf-88-99-162-157.ngrok-free.app";
@@ -107,8 +110,6 @@ const LurnyUser = () => {
       setFilteredLurnies(temp);
     }
   }, [showAll]);
-
-  console.log(filterdLurnies);
 
   const isYoutubeUrl = (url) => {
     return url.includes("youtube.com") || url.includes("youtu.be");

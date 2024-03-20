@@ -14,7 +14,7 @@ import NewPagination from "../components/NewPagination";
 // import Pagination from "../components/Pagination";
 
 const LurnySearch = () => {
-  const { lurnies, setLurnies } = useLurnyStore();
+  const { lurnies, setLurnies, clearLurnies } = useLurnyStore();
   const [showFilter, setShowFilter] = useState(false);
   const [searchTerm, setSearchTerm] = useState(""); // State to hold the search term
   const [filteredLurnies, setFilteredLurnies] = useState([]);
@@ -33,6 +33,9 @@ const LurnySearch = () => {
 
   useEffect(() => {
     getLurnies();
+    return () => {
+      clearLurnies();
+    };
   }, []);
 
   useEffect(() => {
