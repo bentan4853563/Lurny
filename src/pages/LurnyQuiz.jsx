@@ -472,12 +472,13 @@ function LurnyQuiz() {
               {collections &&
                 collections.length > 0 &&
                 collections.slice(0, 9).map((keyword, index) => (
-                  <li
+                  <Link
+                    to="/lurny-category"
                     key={index}
-                    className="text-gray-300 text-left text-[6rem] sm:text-[2rem]"
+                    className="text-gray-300 text-left text-[6rem] sm:text-[2rem] cursor-pointer"
                   >
                     {keyword}
-                  </li>
+                  </Link>
                 ))}
             </ul>
           </div>
