@@ -40,12 +40,13 @@ const LurnyUser = () => {
   // const backend_url = "https://6faf-88-99-162-157.ngrok-free.app";
   const backend_url = import.meta.env.VITE_BACKEND_URL;
 
-  // useEffect(() => {
-  //   // clearLurnies();
-  //   if (userData) {
-  //     myLurnies();
-  //   }
-  // }, [userData]);
+  useEffect(() => {
+    // clearLurnies();
+    console.log("userData", userData);
+    if (userData) {
+      myLurnies();
+    }
+  }, [userData]);
 
   useEffect(() => {
     clearLurnies();
@@ -105,7 +106,6 @@ const LurnyUser = () => {
       return image ? image : defaultImg;
     }
   };
-
   const handleInsert = async (lurny) => {
     const options = {
       method: "POST", // Request method
