@@ -47,6 +47,7 @@ const LurnyUser = () => {
 
   useEffect(() => {
     // clearLurnies();
+
     console.log("userData", userData);
     if (userData) {
       myLurnies();
@@ -111,6 +112,16 @@ const LurnyUser = () => {
       setFilteredLurnies(temp);
     }
   }, [showAll, lurnies]);
+  const [countSharedTrue, setCountSharedTrue] = useState(0);
+  useEffect(() => {
+    if (userData && lurnies.length > 0) {
+      const count =
+        lurnies.length > 0
+          ? lurnies.filter((obj) => obj.user !== userData.uid).length
+          : 0;
+      setCountSharedTrue(count);
+    }
+  }, [userData, lurnies]);
 
   const isYoutubeUrl = (url) => {
     return url.includes("youtube.com") || url.includes("youtu.be");
@@ -195,11 +206,6 @@ const LurnyUser = () => {
         console.error("Error:", error); // Handle errors
       });
   };
-
-  const countSharedTrue =
-    lurnies.length > 0
-      ? lurnies.filter((obj) => obj.user !== userData.uid).length
-      : 0;
 
   return (
     <div className="min-w-[100vw] min-h-[100vh] font-raleway">
