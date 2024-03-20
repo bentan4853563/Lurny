@@ -94,7 +94,9 @@ function LurnyQuiz() {
   const { title, summary, quiz, collections } = quizData;
 
   const isYoutubeUrl = (url) => {
-    return url.includes("youtube.com") || url.includes("youtu.be");
+    if (url) {
+      return url.includes("youtube.com") || url.includes("youtu.be");
+    }
   };
 
   const getDefaultImg = (image, url) => {

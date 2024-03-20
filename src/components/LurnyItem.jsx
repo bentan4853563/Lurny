@@ -43,10 +43,14 @@ function LurnyItem({ data }) {
 
   const newImg = getDefaultImg(image, url);
 
-  const getCategory = (lurny) => {
-    return lurny.collections[
-      Math.floor(Math.random * lurny.collections.length)
-    ];
+  const getCategory = () => {
+    const category =
+      data.collections[Math.floor(Math.random * data.collections.length)];
+    if (category) {
+      return category;
+    } else {
+      return "Category";
+    }
   };
 
   return (
