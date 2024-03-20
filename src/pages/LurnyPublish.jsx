@@ -48,7 +48,6 @@ const LurnyPublish = () => {
   useEffect(() => {
     // Check if location.state exists and if it has the category property
     if (location.state && location.state.category) {
-      console.log(location.state.category);
       setSelectedCategories([location.state.category]);
     }
   }, [location]); // Add 'location' as a dependency here
@@ -74,6 +73,10 @@ const LurnyPublish = () => {
   useEffect(() => {
     const categoryMatchesSearchTerm = (category) =>
       category.toLowerCase().includes(searchTerm.toLowerCase());
+
+    const categoryIsSelected = (category) =>
+      selectedCategories.length === 0 || selectedCategories.includes(category);
+
     const newCategories = lurnies
       .filter((lurny) => {
         // First, check if the lurny matches the selected media types
@@ -81,12 +84,20 @@ const LurnyPublish = () => {
         const matchesMedias = selectedMedias.includes(
           isYoutube ? "Video" : "Web Page"
         );
-        return matchesMedias;
+
+        // Check if any of the lurny's collections match the selected categories
+        const matchesSelectedCategories =
+          lurny.collections.some(categoryIsSelected);
+
+        return matchesMedias && matchesSelectedCategories;
       })
       .reduce((accumulator, lurny) => {
         // Then, go through each collection/category in the lurny
         lurny.collections.forEach((category) => {
-          if (!categoryMatchesSearchTerm(category)) {
+          if (
+            !categoryMatchesSearchTerm(category) ||
+            !categoryIsSelected(category)
+          ) {
             return;
           }
 
@@ -108,7 +119,7 @@ const LurnyPublish = () => {
       }, []);
 
     setCategories(newCategories);
-  }, [selectedMedias, searchTerm, lurnies]);
+  }, [selectedCategories, selectedMedias, searchTerm, lurnies]);
 
   useEffect(() => {
     const filterByCategoryAndMedia = (lurny) => {
@@ -209,7 +220,7 @@ const LurnyPublish = () => {
           <FilterPan
             media={media}
             changeMedia={(selectedItems) => setSelectedMedias(selectedItems)}
-            categories={selectedCategories}
+            categories={categories}
             changeCategory={(selectedItems) =>
               setSelectedCategories(selectedItems)
             }
