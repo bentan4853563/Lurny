@@ -15,7 +15,7 @@ import UserPan from "../components/UserPan";
 import NewPagination from "../components/NewPagination";
 
 const LurnyUser = () => {
-  const { lurnies, setLurnies, shareLurny } = useLurnyStore();
+  const { lurnies, setLurnies, shareLurny, clearLurnies } = useLurnyStore();
   const [tempData, setTempData] = useState(null);
   const [showSidePan, setShowSidePan] = useState(false);
   const [userData, setUserData] = useState(null);
@@ -41,19 +41,22 @@ const LurnyUser = () => {
   const backend_url = import.meta.env.VITE_BACKEND_URL;
 
   // useEffect(() => {
-  //   clearLurnies();
+  //   // clearLurnies();
   //   if (userData) {
   //     myLurnies();
   //   }
   // }, [userData]);
 
   useEffect(() => {
+    clearLurnies();
     if (localStorage.getItem("tempData")) {
       console.log("tempData", localStorage.getItem("tempData"));
       setTempData(localStorage.getItem("tempData"));
       localStorage.removeItem("tempData");
     } else {
-      myLurnies();
+      if (userData) {
+        myLurnies();
+      }
     }
   }, []);
 
@@ -117,7 +120,7 @@ const LurnyUser = () => {
       .then((responseData) => {
         console.log("responseData", responseData);
         // addLurny(responseData);
-        myLurnies();
+        myLurnies(userData.uid);
         toast.success("Inserted!", {
           position: "top-right",
         });
