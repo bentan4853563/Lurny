@@ -27,7 +27,7 @@ const LurnyPublish = () => {
   const [media, setMedia] = useState([{ media: "", count: 0 }]);
 
   // Pagenation state
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(3);
   const [itemsPerPage] = useState(8); // Adjust as needed
   // Get current items
   const indexOfLastItem = currentPage * itemsPerPage;
