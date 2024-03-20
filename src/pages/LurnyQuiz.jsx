@@ -181,7 +181,7 @@ function LurnyQuiz() {
   };
 
   return (
-    <div className="min-w-[100vw] min-h-[100vh] font-raleway">
+    <div className="min-h-[100vh] font-raleway">
       {/* Header */}
       <div className="w-full bg-black px-[4rem] sm:px-[16rem] lg:px-[20rem] flex justify-between items-center py-[4rem] lg:py-[1.5rem]">
         <Link to="/lurny/list" className="select-none">
@@ -481,15 +481,12 @@ function LurnyQuiz() {
             <div className="flex flex-col gap-[1.5rem]">
               {relatedLurnies.length > 0 &&
                 relatedLurnies.map((item, index) => (
-                  <div
-                    key={index}
-                    onClick={() => handleClick(item.url)}
-                    className="flex items-center gap-[2rem] cursor-pointer"
-                  >
+                  <div key={index} className="flex items-center gap-[2rem]">
                     <img
-                      src={item.img}
+                      onClick={() => handleClick(item.url)}
+                      src={getDefaultImg(item.image, item.url)}
                       alt="lurny image"
-                      className="w-[10rem]"
+                      className="w-[10rem] cursor-pointer"
                     />
                     <span className="text-[1.5rem] text-left flex flex-1">
                       {item.title}
