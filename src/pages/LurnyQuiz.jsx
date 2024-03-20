@@ -230,7 +230,7 @@ function LurnyQuiz() {
                   summary.map((item, index) => (
                     <div
                       key={index}
-                      className=" flex items-center gap-[2rem] text-gray-300 text-left text-[7rem] leading-[7.5rem] sm:text-[2.3rem] sm:leading-[2.5rem]"
+                      className=" flex items-start gap-[2rem] text-gray-300 text-left text-[7rem] leading-[7.5rem] sm:text-[2.3rem] sm:leading-[2.5rem]"
                     >
                       <span>{index + 1}.</span>
                       <p>{item}</p>
