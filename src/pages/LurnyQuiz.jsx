@@ -90,7 +90,7 @@ function LurnyQuiz() {
     setCurrentQuestionNumber(0);
   }, [content]);
 
-  const { title, summary, quiz, collections } = quizData;
+  const { title, summary, quiz, collections, url, image } = quizData;
 
   const buttons = ["Read Full Article", "Quiz Me!", "Remember this"];
 
@@ -169,14 +169,14 @@ function LurnyQuiz() {
         {/* Image */}
         <div className="w-full sm:w-[32rem] px-[16rem] sm:px-0 flex flex-col items-start">
           <a
-            href={quizData.url}
+            href={url}
             target="black"
             className="text-white text-start text-[7rem] sm:text-[2.5rem] hover:text-sky-500"
           >
             View Original
           </a>
           <img
-            src={quizData.image}
+            src={image}
             alt=""
             className="w-full h-[64rem] sm:h-[20rem] object-cover rounded-[2rem]"
           />
