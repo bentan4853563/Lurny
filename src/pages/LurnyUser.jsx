@@ -48,18 +48,20 @@ const LurnyUser = () => {
     }
   }, [userData]);
 
+  const tempLurnyData = localStorage.getItem("tempData");
+
   useEffect(() => {
     clearLurnies();
-    if (localStorage.getItem("tempData")) {
-      console.log("tempData", localStorage.getItem("tempData"));
-      setTempData(localStorage.getItem("tempData"));
+    if (tempLurnyData) {
+      console.log("tempData", tempLurnyData);
+      setTempData(tempLurnyData);
       localStorage.removeItem("tempData");
     } else {
       if (userData) {
         myLurnies();
       }
     }
-  }, []);
+  }, [tempLurnyData]);
 
   useEffect(() => {
     if (tempData) {
@@ -118,9 +120,9 @@ const LurnyUser = () => {
     await fetch(`${backend_url}/api/lurny/insert`, options)
       .then((response) => response.json()) // Parse JSON response
       .then((responseData) => {
-        console.log("responseData", responseData);
+        console.log("responseData call my lurnies", responseData);
         // addLurny(responseData);
-        myLurnies(userData.uid);
+        myLurnies();
         toast.success("Inserted!", {
           position: "top-right",
         });

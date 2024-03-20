@@ -40,7 +40,7 @@ const NewPagination = ({ itemsPerPage, totalItems, paginate, currentPage }) => {
   };
 
   return (
-    <nav className="flex justify-center my-4 mx-auto">
+    <nav className="flex justify-center my-[4rem] mx-auto">
       {pageNumbers.length > 1 && (
         <ul className="list-reset flex items-center gap-[1.5rem]">
           <li>
