@@ -475,7 +475,7 @@ function LurnyQuiz() {
                 collections.slice(0, 9).map((keyword, index) => (
                   <li
                     onClick={() =>
-                      navigate("/lurny/list", { category: keyword })
+                      navigate("/lurny/list", { state: { category: keyword } })
                     }
                     key={index}
                     className="text-gray-300 text-left text-[6rem] sm:text-[2rem] cursor-pointer"
