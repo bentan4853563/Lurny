@@ -121,7 +121,7 @@ function LurnyQuiz() {
     return `https://img.youtube.com/vi/${videoID}/maxresdefault.jpg`;
   }
 
-  const newImg = getDefaultImg(quizData.url, quizData.image);
+  const newImg = getDefaultImg(quizData.image, quizData.url);
 
   const buttons = ["Read Full Article", "Quiz Me!", "Remember this"];
 
