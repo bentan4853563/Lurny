@@ -46,11 +46,12 @@ const LurnyPublish = () => {
   }, []);
 
   useEffect(() => {
-    if (location.category) {
+    // Check if location.state exists and if it has the category property
+    if (location.state && location.state.category) {
       console.log(location.state.category);
-      setSelectedCategories(location.state.category);
+      setSelectedCategories([location.state.category]);
     }
-  }, []);
+  }, [location]); // Add 'location' as a dependency here
 
   // set media
   useEffect(() => {
