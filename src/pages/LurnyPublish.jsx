@@ -48,6 +48,7 @@ const LurnyPublish = () => {
   useEffect(() => {
     // Check if location.state exists and if it has the category property
     if (location.state && location.state.category) {
+      console.log(location.state.category);
       setSelectedCategories([location.state.category]);
     }
   }, [location]); // Add 'location' as a dependency here
@@ -73,10 +74,6 @@ const LurnyPublish = () => {
   useEffect(() => {
     const categoryMatchesSearchTerm = (category) =>
       category.toLowerCase().includes(searchTerm.toLowerCase());
-
-    const categoryIsSelected = (category) =>
-      selectedCategories.length === 0 || selectedCategories.includes(category);
-
     const newCategories = lurnies
       .filter((lurny) => {
         // First, check if the lurny matches the selected media types
@@ -84,20 +81,12 @@ const LurnyPublish = () => {
         const matchesMedias = selectedMedias.includes(
           isYoutube ? "Video" : "Web Page"
         );
-
-        // Check if any of the lurny's collections match the selected categories
-        const matchesSelectedCategories =
-          lurny.collections.some(categoryIsSelected);
-
-        return matchesMedias && matchesSelectedCategories;
+        return matchesMedias;
       })
       .reduce((accumulator, lurny) => {
         // Then, go through each collection/category in the lurny
         lurny.collections.forEach((category) => {
-          if (
-            !categoryMatchesSearchTerm(category) ||
-            !categoryIsSelected(category)
-          ) {
+          if (!categoryMatchesSearchTerm(category)) {
             return;
           }
 
@@ -119,7 +108,7 @@ const LurnyPublish = () => {
       }, []);
 
     setCategories(newCategories);
-  }, [selectedCategories, selectedMedias, searchTerm, lurnies]);
+  }, [selectedMedias, searchTerm, lurnies]);
 
   useEffect(() => {
     const filterByCategoryAndMedia = (lurny) => {
@@ -238,7 +227,7 @@ const LurnyPublish = () => {
           <NewPagination
             totalItems={filteredLurnies.length}
             itemsPerPage={itemsPerPage}
-            currentPage={selectedCategories}
+            currentPage={currentPage}
             paginate={(value) => paginate(value)}
           />
         </div>
