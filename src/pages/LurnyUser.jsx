@@ -32,6 +32,7 @@ const LurnyUser = () => {
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   useEffect(() => {
+    clearLurnies();
     const accessToken = sessionStorage.getItem("token");
     if (accessToken) {
       setUserData(jwtDecode(accessToken));

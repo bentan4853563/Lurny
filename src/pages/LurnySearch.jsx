@@ -33,6 +33,7 @@ const LurnySearch = () => {
 
   useEffect(() => {
     getLurnies();
+
     return () => {
       clearLurnies();
     };
