@@ -262,7 +262,9 @@ function LurnyQuiz() {
             <div className="text-white">
               {/* title */}
               <h1 className="text-[10rem] sm:text-[4rem] text-left font-bold">
-                {title}
+                {title
+                  ? title
+                  : "There is no Quiz data. Please wait loading data."}
               </h1>
               {/* Summary */}
               <div className="flex flex-col gap-[4rem] sm:gap-[2rem] mt-[4rem]">
@@ -493,7 +495,7 @@ function LurnyQuiz() {
                       onClick={() => handleClick(item.url)}
                       src={getDefaultImg(item.image, item.url)}
                       alt="lurny image"
-                      className="w-[10rem] h-[6rem] cursor-pointer"
+                      className="w-[10rem] h-[6rem] rounded-lg cursor-pointer"
                     />
                     <span className="text-[1.5rem] text-left flex flex-1">
                       {item.title}
