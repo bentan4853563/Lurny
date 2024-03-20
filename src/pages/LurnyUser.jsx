@@ -197,7 +197,9 @@ const LurnyUser = () => {
   };
 
   const countSharedTrue =
-    lurnies.length > 0 ? lurnies.filter((obj) => obj.shared).length : 0;
+    lurnies.length > 0
+      ? lurnies.filter((obj) => obj.user !== userData.uid).length
+      : 0;
 
   return (
     <div className="min-w-[100vw] min-h-[100vh] font-raleway">
