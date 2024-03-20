@@ -6,7 +6,7 @@ const ProtectedRoute = () => {
   if (!isAuth) {
     return <Navigate to="/signin" replace />;
   }
-
+  console.log("Outlet");
   return <Outlet />;
 };
 
