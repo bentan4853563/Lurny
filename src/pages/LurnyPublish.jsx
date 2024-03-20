@@ -179,7 +179,10 @@ const LurnyPublish = () => {
         <div className="w-4/5 flex flex-wrap justify-center gap-[2rem] text-[12rem] lg:text-[4rem] font-bold">
           {selectedCategories.length > 0 &&
             selectedCategories.map((category, index) => (
-              <span key={index}>{category}</span>
+              <span key={index} className="leading-[12.5rem]">
+                {category}
+                {index < selectedCategories.length - 1 && <span>,</span>}
+              </span>
             ))}
         </div>
         <span className="text-[8rem] lg:text-[2.5rem] font-medium">
