@@ -107,43 +107,59 @@ const LurnyPublish = () => {
         return accumulator;
       }, []);
 
-    setCategories(newCategories);
+    setFilteredLurnies(newCategories);
   }, [selectedMedias, searchTerm, lurnies]);
 
   useEffect(() => {
-    const filterByCategoryAndMedia = (lurny) => {
-      const matchesCategories =
-        selectedCategories.includes("All") ||
-        lurny.collections.some((category) =>
-          selectedCategories.includes(category)
+    const categoryMatchesSearchTerm = (category) =>
+      category.toLowerCase().includes(searchTerm.toLowerCase());
+
+    const categoryIsSelected = (category) =>
+      selectedCategories.length === 0 || selectedCategories.includes(category);
+
+    const newCategories = lurnies
+      .filter((lurny) => {
+        // First, check if the lurny matches the selected media types
+        const isYoutube = isYoutubeUrl(lurny.url);
+        const matchesMedias = selectedMedias.includes(
+          isYoutube ? "Video" : "Web Page"
         );
 
-      const isYoutube = isYoutubeUrl(lurny.url);
-      const matchesMedias = selectedMedias.includes(
-        isYoutube ? "Video" : "Web Page"
-      );
+        // Check if any of the lurny's collections match the selected categories
+        const matchesSelectedCategories =
+          lurny.collections.some(categoryIsSelected);
 
-      return matchesCategories && matchesMedias;
-    };
+        return matchesMedias && matchesSelectedCategories;
+      })
+      .reduce((accumulator, lurny) => {
+        // Then, go through each collection/category in the lurny
+        lurny.collections.forEach((category) => {
+          if (
+            !categoryMatchesSearchTerm(category) ||
+            !categoryIsSelected(category)
+          ) {
+            return;
+          }
 
-    const sortByCategory = (a, b) => {
-      const categoryA = a.collections[0].toLowerCase();
-      const categoryB = b.collections[0].toLowerCase(); // Corrected typo here
-      if (categoryA < categoryB) {
-        return -1;
-      }
-      if (categoryA > categoryB) {
-        return 1;
-      }
-      return 0;
-    };
+          // Find if the category already exists in the accumulator
+          const existingCategory = accumulator.find(
+            (c) => c.category === category
+          );
 
-    const filteredAndSortedLurnies = lurnies
-      .filter(filterByCategoryAndMedia)
-      .sort(sortByCategory); // Corrected method call here
+          if (existingCategory) {
+            // Increment count if category already exists
+            existingCategory.count++;
+          } else {
+            // Otherwise, add a new category with count 1 to the accumulator
+            accumulator.push({ category: category, count: 1 });
+          }
+        });
 
-    setFilteredLurnies(filteredAndSortedLurnies);
-  }, [selectedCategories, selectedMedias, lurnies]);
+        return accumulator;
+      }, []);
+
+    setCategories(newCategories);
+  }, [selectedCategories, selectedMedias, searchTerm, lurnies]);
 
   const getLurnies = async () => {
     const options = {
@@ -186,7 +202,7 @@ const LurnyPublish = () => {
             ))}
         </div>
         <span className="text-[8rem] lg:text-[2.5rem] font-medium">
-          {lurnies.length} Lurnies and counting…
+          {filteredLurnies.length} Lurnies and counting…
         </span>
       </div>
       <div className="w-full bg-[#262626] flex flex-1 p-[12rem] sm:p-[6rem] gap-[12rem] sm:gap-[4rem]">
