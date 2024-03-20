@@ -10,6 +10,7 @@ const NewPagination = ({ itemsPerPage, totalItems, paginate, currentPage }) => {
   const [maxPageNumberLimit, setMaxPageNumberLimit] = useState(5);
   const [minPageNumberLimit, setMinPageNumberLimit] = useState(0);
 
+  console.log(totalItems);
   for (let i = 1; i <= Math.ceil(totalItems / itemsPerPage); i++) {
     pageNumbers.push(i);
   }

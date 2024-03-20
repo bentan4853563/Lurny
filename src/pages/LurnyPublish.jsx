@@ -46,7 +46,7 @@ const LurnyPublish = () => {
   }, []);
 
   useEffect(() => {
-    if (location.state) {
+    if (location.category) {
       console.log(location.state.category);
       setSelectedCategories(location.state.category);
     }
@@ -171,10 +171,10 @@ const LurnyPublish = () => {
   };
 
   return (
-    <div className="w-[100vw] h-[100vh] font-raleway">
+    <div className="w-full h-[100vh] font-raleway">
       <LurnyHeader />
       <ToastContainer className="text-start" />
-      <div className="bg-[#2E2E2E] flex flex-col text-white py-[4rem] sm:py-[3rem] lg:py-[2rem]">
+      <div className="w-full bg-[#2E2E2E] flex flex-col items-center text-white py-[4rem] sm:py-[3rem] lg:py-[2rem]">
         <div className="w-4/5 flex flex-wrap gap-[2rem] text-[12rem] lg:text-[4rem] font-bold">
           {selectedCategories.length > 0 &&
             selectedCategories.map((category, index) => (
