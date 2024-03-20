@@ -10,7 +10,7 @@ function LurnyItem({ data }) {
   const { title, image, url } = data;
 
   const handleClick = () => {
-    navigate(`/lurny-quiz/${encodeURIComponent(url)}`);
+    navigate(`/lurny/quiz/${encodeURIComponent(url)}`);
   };
 
   const isYoutubeUrl = (url) => {

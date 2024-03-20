@@ -31,7 +31,7 @@ export default function Header() {
         >
           <MenuItem className="hover:bg-white">
             <Link
-              to="/lurny-list"
+              to="/lurny/list"
               className="w-full py-[0.5rem] flex justify-center text-[2rem] hover:bg-[#DCD0EC] rounded-lg"
             >
               Lurny List

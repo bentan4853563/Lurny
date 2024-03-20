@@ -110,7 +110,7 @@ const LurnyUser = () => {
       let temp = lurnies.filter((lurny) => lurny.shared == false);
       setFilteredLurnies(temp);
     }
-  }, [showAll]);
+  }, [showAll, lurnies]);
 
   const isYoutubeUrl = (url) => {
     return url.includes("youtube.com") || url.includes("youtu.be");

@@ -28,7 +28,7 @@ export default function LurnyHeader() {
 
   return (
     <div className="w-full bg-black px-[16rem] lg:px-[20rem] flex justify-between items-center py-[4rem] lg:py-[1.5rem]">
-      <Link to="/lurny-list" className="select-none">
+      <Link to="/lurny/list" className="select-none">
         <img
           src={LetterLogo}
           alt="Letter logo"
@@ -39,19 +39,19 @@ export default function LurnyHeader() {
         <Link to="#" className="text-white hover:text-gray-300">
           Lurny Search
         </Link>
-        <Link to="/lurny-category" className="text-white hover:text-gray-300">
+        <Link to="/lurny/category" className="text-white hover:text-gray-300">
           Lurny Category
         </Link>
       </div> */}
       <div className="flex items-center gap-[8rem] lg:gap-[2rem]">
-        {/* <Link to="/lurny-category">
+        {/* <Link to="/lurny/category">
           <img
             src={userImg}
             alt="Chrome Icon"
             className="w-[16rem] sm:w-[12rem] md:w-[10rem] lg:w-[8rem] xl:w-[4rem] rounded-[100%]"
           />
         </Link> */}
-        <Link to="/lurny-search">
+        <Link to="/lurny/search">
           <ImSearch className="text-[16rem] sm:text-[10rem] md:text-[8rem] lg:text-[6rem] xl:text-[3rem] text-gray-500 cursor-pointer" />
         </Link>
 
@@ -81,7 +81,7 @@ export default function LurnyHeader() {
             Lurnies
           </MenuItem>
           <MenuItem
-            onClick={() => navigate("/lurny-search")}
+            onClick={() => navigate("/lurny/search")}
             className="flex justify-center text-black text-[10rem] sm:text-[8rem] md:text-[4rem] xl:text-[2rem] px-[10rem] sm:px-[8rem] md:px-[6rem] lg:px-[4rem] py-[1rem]"
           >
             Search
