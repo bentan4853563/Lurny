@@ -462,7 +462,7 @@ function LurnyQuiz() {
             <ul className="ml-[6rem] sm:ml-[2rem]">
               {collections &&
                 collections.length > 0 &&
-                collections.map((keyword, index) => (
+                collections.slice(0, 9).map((keyword, index) => (
                   <li
                     key={index}
                     className="text-gray-300 text-left text-[6rem] sm:text-[2rem]"
