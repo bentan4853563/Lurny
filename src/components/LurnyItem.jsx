@@ -59,7 +59,7 @@ function LurnyItem({ data }) {
       className="w-[80rem] sm:w-[48rem] lg:w-[32rem] cursor-pointer hover:scale-105 hover:duration-300"
     >
       <img
-        src="#"
+        src={newImg}
         // src={newImg}
         alt="lurny image"
         className="h-[40rem] sm:h-[24rem] lg:h-[16rem] w-full object-cover rounded-[2rem] sm:rounded-[1.5rem]"

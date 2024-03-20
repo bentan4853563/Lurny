@@ -19,7 +19,7 @@ const LurnyPublish = () => {
   const { lurnies, setLurnies, clearLurnies } = useLurnyStore();
   const [showFilter, setShowFilter] = useState(false);
   const [filteredLurnies, setFilteredLurnies] = useState([]);
-  const [selectedCategories, setSelectedCategories] = useState(["All"]);
+  const [selectedCategories, setSelectedCategories] = useState([]);
   const [selectedMedias, setSelectedMedias] = useState([]); // Assuming "Video" is another possible type
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -48,7 +48,6 @@ const LurnyPublish = () => {
   useEffect(() => {
     // Check if location.state exists and if it has the category property
     if (location.state && location.state.category) {
-      console.log(location.state.category);
       setSelectedCategories([location.state.category]);
     }
   }, [location]); // Add 'location' as a dependency here
@@ -72,8 +71,62 @@ const LurnyPublish = () => {
   }, [lurnies]);
 
   useEffect(() => {
+    if (lurnies.length > 0) {
+      if (selectedCategories.length === 0) {
+        setFilteredLurnies(lurnies);
+      } else {
+        const tempLurnies = lurnies.filter((lurny) =>
+          selectedCategories.some((selectedCategory) =>
+            lurny.collections.includes(selectedCategory)
+          )
+        );
+        setFilteredLurnies(tempLurnies);
+      }
+    }
+  }, [lurnies, selectedCategories]);
+
+  useEffect(() => {
     const categoryMatchesSearchTerm = (category) =>
       category.toLowerCase().includes(searchTerm.toLowerCase());
+
+    const newCategories = lurnies
+      .filter((lurny) => {
+        // Check if the lurny matches the selected media types
+        const isYoutube = isYoutubeUrl(lurny.url);
+        return selectedMedias.includes(isYoutube ? "Video" : "Web Page");
+      })
+      .reduce((accumulator, lurny) => {
+        // Go through each collection/category in the lurny
+        lurny.collections.forEach((category) => {
+          if (!categoryMatchesSearchTerm(category)) {
+            return;
+          }
+
+          // Find if the category already exists in the accumulator
+          const existingCategory = accumulator.find(
+            (c) => c.category === category
+          );
+
+          if (existingCategory) {
+            // Increment count if category already exists
+            existingCategory.count++;
+          } else {
+            // Otherwise, add a new category with count 1 to the accumulator
+            accumulator.push({ category: category, count: 1 });
+          }
+        });
+
+        return accumulator; // Return the accumulator for the next iteration
+      }, []); // Start with an empty array as the accumulator
+
+    // Set the categories with the reduced result
+    setCategories(newCategories);
+  }, [selectedMedias, searchTerm, lurnies]);
+
+  useEffect(() => {
+    const categoryMatchesSearchTerm = (category) =>
+      category.toLowerCase().includes(searchTerm.toLowerCase());
+
     const newCategories = lurnies
       .filter((lurny) => {
         // First, check if the lurny matches the selected media types
@@ -81,6 +134,7 @@ const LurnyPublish = () => {
         const matchesMedias = selectedMedias.includes(
           isYoutube ? "Video" : "Web Page"
         );
+
         return matchesMedias;
       })
       .reduce((accumulator, lurny) => {
@@ -107,59 +161,8 @@ const LurnyPublish = () => {
         return accumulator;
       }, []);
 
-    setFilteredLurnies(newCategories);
-  }, [selectedMedias, searchTerm, lurnies]);
-
-  useEffect(() => {
-    const categoryMatchesSearchTerm = (category) =>
-      category.toLowerCase().includes(searchTerm.toLowerCase());
-
-    const categoryIsSelected = (category) =>
-      selectedCategories.length === 0 || selectedCategories.includes(category);
-
-    const newCategories = lurnies
-      .filter((lurny) => {
-        // First, check if the lurny matches the selected media types
-        const isYoutube = isYoutubeUrl(lurny.url);
-        const matchesMedias = selectedMedias.includes(
-          isYoutube ? "Video" : "Web Page"
-        );
-
-        // Check if any of the lurny's collections match the selected categories
-        const matchesSelectedCategories =
-          lurny.collections.some(categoryIsSelected);
-
-        return matchesMedias && matchesSelectedCategories;
-      })
-      .reduce((accumulator, lurny) => {
-        // Then, go through each collection/category in the lurny
-        lurny.collections.forEach((category) => {
-          if (
-            !categoryMatchesSearchTerm(category) ||
-            !categoryIsSelected(category)
-          ) {
-            return;
-          }
-
-          // Find if the category already exists in the accumulator
-          const existingCategory = accumulator.find(
-            (c) => c.category === category
-          );
-
-          if (existingCategory) {
-            // Increment count if category already exists
-            existingCategory.count++;
-          } else {
-            // Otherwise, add a new category with count 1 to the accumulator
-            accumulator.push({ category: category, count: 1 });
-          }
-        });
-
-        return accumulator;
-      }, []);
-
     setCategories(newCategories);
-  }, [selectedCategories, selectedMedias, searchTerm, lurnies]);
+  }, [selectedMedias, searchTerm, lurnies]);
 
   const getLurnies = async () => {
     const options = {
