@@ -35,8 +35,8 @@ function App() {
     <>
       <Router>
         <Routes>
-          <Route element={<ProtectedRoute />}>
-            <Route path="/" element={<Home />} />
+          <Route path="/" element={<ProtectedRoute />}>
+            <Route path="/home" element={<Home />} />
             <Route path="/lurny/list" element={<LurnyPublish />} />
             <Route path="/lurny-category" element={<LurnyUser />} />
             <Route path="/lurny/quiz/:url" element={<LurnyQuiz />} />
