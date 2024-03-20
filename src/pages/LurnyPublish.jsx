@@ -175,14 +175,11 @@ const LurnyPublish = () => {
     <div className="w-full h-[100vh] font-raleway">
       <LurnyHeader />
       <ToastContainer className="text-start" />
-      <div className="w-full bg-[#2E2E2E] flex flex-col items-center text-white py-[4rem] sm:py-[3rem] lg:py-[2rem]">
+      <div className="w-full bg-[#2E2E2E] flex flex-col gap-[3rem] items-center text-white py-[4rem] sm:py-[3rem] lg:py-[2rem]">
         <div className="w-4/5 flex flex-wrap justify-center gap-[2rem] text-[12rem] lg:text-[4rem] font-bold">
           {selectedCategories.length > 0 &&
             selectedCategories.map((category, index) => (
-              <span
-                key={index}
-                className="leading:[12.5rem] lg:leading-[4.5rem]"
-              >
+              <span key={index} className="leading:[12.5rem] lg:leading-[3rem]">
                 {category}
                 {index < selectedCategories.length - 1 && <span>,</span>}
               </span>
