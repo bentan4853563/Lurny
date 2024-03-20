@@ -232,7 +232,7 @@ function LurnyQuiz() {
                       key={index}
                       className="text-gray-300 text-left text-[7rem] leading-[7.5rem] sm:text-[2.3rem] sm:leading-[2.5rem]"
                     >
-                      {item}
+                      {index + 1}&nbsp;&nbsp;&nbsp;{item}
                     </p>
                   ))}
               </div>
