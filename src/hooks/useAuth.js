@@ -1,13 +1,12 @@
-// hooks/useAuth.js
 import { useState, useEffect } from "react";
 
 const useAuth = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-    // Check if the token is present in sessionStorage
     const token = sessionStorage.getItem("token");
     setIsAuthenticated(!!token);
+    console.log(!!token);
   }, []);
 
   return isAuthenticated;
