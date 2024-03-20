@@ -112,7 +112,9 @@ const LurnyUser = () => {
       setFilteredLurnies(temp);
     }
   }, [showAll, lurnies]);
+
   const [countSharedTrue, setCountSharedTrue] = useState(0);
+
   useEffect(() => {
     if (userData && lurnies.length > 0) {
       const count =

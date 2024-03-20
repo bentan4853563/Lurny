@@ -229,8 +229,8 @@ function LurnyQuiz() {
         <div className="flex items-center gap-[8rem] lg:gap-[2rem]">
           {userData && (
             <img
-              src={userData.photoURL}
-              // src="###"
+              // src={userData.photoURL}
+              src="###"
               alt="Chrome Icon"
               onClick={() => navigate("/lurny-category")}
               className="w-[16rem] sm:w-[12rem] md:w-[10rem] lg:w-[8rem] xl:w-[4rem] rounded-[100%] cursor-pointer"
@@ -252,8 +252,8 @@ function LurnyQuiz() {
             View Original
           </a>
           <img
-            src={newImg}
-            // src="###"
+            // src={newImg}
+            src="###"
             alt=""
             className="w-full h-[64rem] sm:h-[20rem] object-cover rounded-[2rem]"
           />
@@ -499,8 +499,8 @@ function LurnyQuiz() {
                   <div key={index} className="flex items-center gap-[2rem]">
                     <img
                       onClick={() => handleClick(item.url)}
-                      // src="###"
-                      src={getDefaultImg(item.image, item.url)}
+                      src="###"
+                      // src={getDefaultImg(item.image, item.url)}
                       alt="lurny image"
                       className="w-[10rem] h-[6rem] rounded-lg cursor-pointer"
                     />
