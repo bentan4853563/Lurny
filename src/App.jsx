@@ -33,7 +33,7 @@ function App() {
 
   return (
     <>
-      <Router>
+      <Router style={{ minWidth: "100vw" }}>
         <Routes>
           <Route path="/" element={<ProtectedRoute />}>
             <Route path="/home" element={<Home />} />

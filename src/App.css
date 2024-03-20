@@ -2,6 +2,7 @@
   background-color: #1e1e1e;
   margin: 0 auto;
   text-align: center;
+  min-width: 100vw;
 }
 
 .logo {
