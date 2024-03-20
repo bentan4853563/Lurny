@@ -227,7 +227,7 @@ const LurnyPublish = () => {
           <NewPagination
             totalItems={filteredLurnies.length}
             itemsPerPage={itemsPerPage}
-            currentPage={currentPage}
+            currentPage={selectedCategories}
             paginate={(value) => paginate(value)}
           />
         </div>
