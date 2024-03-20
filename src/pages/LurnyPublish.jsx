@@ -45,12 +45,12 @@ const LurnyPublish = () => {
     };
   }, []);
 
-  useEffect(() => {
-    if (location.state) {
-      console.log(location.state.category);
-      setSelectedCategories(location.state.category);
-    }
-  }, [location]);
+  // useEffect(() => {
+  //   if (location.state) {
+  //     console.log(location.state.category);
+  //     setSelectedCategories(location.state.category);
+  //   }
+  // }, [location]);
 
   // set media
   useEffect(() => {
