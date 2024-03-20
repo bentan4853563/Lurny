@@ -108,6 +108,8 @@ const LurnyUser = () => {
     }
   }, [showAll]);
 
+  console.log(filterdLurnies);
+
   const isYoutubeUrl = (url) => {
     return url.includes("youtube.com") || url.includes("youtu.be");
   };
@@ -225,29 +227,26 @@ const LurnyUser = () => {
         <div className="w-full flex flex-col justify-between  items-center">
           <div className="w-full flex flex-wrap justify-start gap-[8rem] lg:gap-[2rem]">
             {currentItems.length > 0 &&
-              currentItems.map(
-                (lurny, index) =>
-                  (lurny.shared || showAll) && (
-                    <div key={index}>
-                      <LurnyItem data={lurny} />
-                      {lurny.shared ? (
-                        <div className="bg-[#00B050] py-[1rem] rounded-md text-white text-[6rem] sm:text-[2rem] cursor-pointer">
-                          Shared
-                        </div>
-                      ) : (
-                        <div
-                          className="bg-white px-[2rem] py-[0.8rem] rounded-md flex justify-between items-center text-black text-[2.2rem] cursor-pointer"
-                          onClick={() => handleShare(lurny._id)}
-                        >
-                          <TfiShare />
-                          <span className="flex flex-1 justify-center">
-                            Share with Community
-                          </span>
-                        </div>
-                      )}
+              currentItems.map((lurny, index) => (
+                <div key={index}>
+                  <LurnyItem data={lurny} />
+                  {lurny.shared ? (
+                    <div className="bg-[#00B050] py-[1rem] rounded-md text-white text-[6rem] sm:text-[2rem] cursor-pointer">
+                      Shared
                     </div>
-                  )
-              )}
+                  ) : (
+                    <div
+                      className="bg-white px-[2rem] py-[0.8rem] rounded-md flex justify-between items-center text-black text-[2.2rem] cursor-pointer"
+                      onClick={() => handleShare(lurny._id)}
+                    >
+                      <TfiShare />
+                      <span className="flex flex-1 justify-center">
+                        Share with Community
+                      </span>
+                    </div>
+                  )}
+                </div>
+              ))}
           </div>
           <NewPagination
             totalItems={filterdLurnies.length}
