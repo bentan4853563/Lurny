@@ -27,7 +27,7 @@ const LurnyPublish = () => {
   const [media, setMedia] = useState([{ media: "", count: 0 }]);
 
   // Pagenation state
-  const [currentPage, setCurrentPage] = useState(3);
+  const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(8); // Adjust as needed
   // Get current items
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -175,10 +175,10 @@ const LurnyPublish = () => {
       <LurnyHeader />
       <ToastContainer className="text-start" />
       <div className="bg-[#2E2E2E] flex flex-col text-white py-[4rem] sm:py-[3rem] lg:py-[2rem]">
-        <div className="text-[12rem] lg:text-[4rem] font-bold">
+        <div className="w-4/5 flex flex-wrap gap-[2rem] text-[12rem] lg:text-[4rem] font-bold">
           {selectedCategories.length > 0 &&
             selectedCategories.map((category, index) => (
-              <span key={index} className="flex justify-center gap-[2rem]">
+              <span key={index} className="">
                 {category}
               </span>
             ))}
