@@ -21,6 +21,7 @@ const LurnyUser = () => {
   const [userData, setUserData] = useState(null);
   const [showAll, setShowAll] = useState(true);
 
+  const [totalCount, setTotalCounts] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(8); // Adjust as needed
   // Get current items
@@ -96,6 +97,16 @@ const LurnyUser = () => {
       setTempData(null);
     }
   }, [tempData]);
+
+  useEffect(() => {
+    setCurrentPage(1);
+    if (showAll) {
+      setTotalCounts(lurnies.length);
+    } else {
+      let temp = lurnies.filter((lurny) => lurny.shared == false);
+      setTotalCounts(temp.length);
+    }
+  }, [showAll]);
 
   const isYoutubeUrl = (url) => {
     return url.includes("youtube.com") || url.includes("youtu.be");
@@ -238,7 +249,7 @@ const LurnyUser = () => {
               ))}
           </div>
           <NewPagination
-            totalItems={lurnies.length}
+            totalItems={totalCount}
             itemsPerPage={itemsPerPage}
             currentPage={currentPage}
             paginate={(value) => paginate(value)}
