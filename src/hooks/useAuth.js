@@ -1,12 +1,7 @@
-import { useState, useEffect } from "react";
-
 const useAuth = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const token = sessionStorage.getItem("token");
 
-  useEffect(() => {
-    const token = sessionStorage.getItem("token");
-    setIsAuthenticated(!!token);
-  }, []);
+  const isAuthenticated = token ? true : false;
 
   return isAuthenticated;
 };
