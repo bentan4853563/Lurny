@@ -20,14 +20,14 @@ const LurnyUser = () => {
   const [showSidePan, setShowSidePan] = useState(false);
   const [userData, setUserData] = useState(null);
   const [showAll, setShowAll] = useState(true);
+  const [filterdLurnies, setFilteredLurnies] = useState([]);
 
-  const [totalCount, setTotalCounts] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(8); // Adjust as needed
   // Get current items
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = lurnies.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = filterdLurnies.slice(indexOfFirstItem, indexOfLastItem);
   // Change page
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
@@ -101,10 +101,10 @@ const LurnyUser = () => {
   useEffect(() => {
     setCurrentPage(1);
     if (showAll) {
-      setTotalCounts(lurnies.length);
+      setFilteredLurnies(lurnies);
     } else {
       let temp = lurnies.filter((lurny) => lurny.shared == false);
-      setTotalCounts(temp.length);
+      setFilteredLurnies(temp);
     }
   }, [showAll]);
 
@@ -250,7 +250,7 @@ const LurnyUser = () => {
               )}
           </div>
           <NewPagination
-            totalItems={totalCount}
+            totalItems={filterdLurnies.length}
             itemsPerPage={itemsPerPage}
             currentPage={currentPage}
             paginate={(value) => paginate(value)}
