@@ -38,6 +38,10 @@ function LurnyQuiz() {
   let { url } = useParams();
 
   useEffect(() => {
+    setCurrentQuestionNumber(1);
+    setAnswerNumber(null);
+    setAnswered(false);
+
     let decodedUrl = decodeURIComponent(url);
     if (lurnies.length > 0 && decodedUrl) {
       const currentLurny = lurnies.find((lurny) => lurny.url === decodedUrl);
