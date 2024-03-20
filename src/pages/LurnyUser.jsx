@@ -107,7 +107,7 @@ const LurnyUser = () => {
     if (showAll) {
       setFilteredLurnies(lurnies);
     } else {
-      let temp = lurnies.filter((lurny) => lurny.shared == false);
+      let temp = lurnies.filter((lurny) => lurny.user !== userData.uid);
       setFilteredLurnies(temp);
     }
   }, [showAll, lurnies]);
