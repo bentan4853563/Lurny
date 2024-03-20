@@ -32,25 +32,6 @@ function LurnyItem({ data }) {
     return match && match[2].length === 11 ? match[2] : null;
   }
 
-  function extractChannelName(url) {
-    // Regular expressions for different YouTube channel URL formats
-    const patterns = [
-      /youtube\.com\/channel\/([\w-]+)/, // For URLs with /channel/
-      /youtube\.com\/c\/([\w-]+)/, // For URLs with /c/
-      /youtube\.com\/user\/([\w-]+)/, // For URLs with /user/
-    ];
-
-    for (const pattern of patterns) {
-      const match = url.match(pattern);
-      if (match && match[1]) {
-        return match[1]; // Return the channel name or ID
-      }
-    }
-
-    // If no pattern matches, return an error message
-    return "No channel name or ID found in the URL";
-  }
-
   function getThumbnailURLFromVideoURL(videoURL) {
     const videoID = getYoutubeVideoID(videoURL);
     if (!videoID) {
@@ -61,7 +42,12 @@ function LurnyItem({ data }) {
   }
 
   const newImg = getDefaultImg(image, url);
-  const getCategory = isYoutubeUrl(url) ? extractChannelName(url) : "Category";
+
+  const getCategory = (lurny) => {
+    return lurny.collections[
+      Math.floor(Math.random * lurny.collections.length)
+    ];
+  };
 
   return (
     <div

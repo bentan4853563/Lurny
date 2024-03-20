@@ -16,6 +16,7 @@ import "@szhsin/react-menu/dist/index.css";
 import "@szhsin/react-menu/dist/transitions/slide.css";
 
 import LetterLogo from "../assets/icons/letter_logo.png";
+import defaultImg from "../assets/images/Lurny/default.png";
 
 function LurnyQuiz() {
   const navigate = useNavigate();
@@ -91,6 +92,36 @@ function LurnyQuiz() {
   }, [content]);
 
   const { title, summary, quiz, collections } = quizData;
+
+  const isYoutubeUrl = (url) => {
+    return url.includes("youtube.com") || url.includes("youtu.be");
+  };
+
+  const getDefaultImg = (image, url) => {
+    if (isYoutubeUrl(url)) {
+      return getThumbnailURLFromVideoURL(url);
+    } else {
+      return image;
+    }
+  };
+
+  function getYoutubeVideoID(url) {
+    const regExp =
+      /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=|shorts\/)([^#\&\?]*).*/;
+    const match = url.match(regExp);
+    return match && match[2].length === 11 ? match[2] : null;
+  }
+
+  function getThumbnailURLFromVideoURL(videoURL) {
+    const videoID = getYoutubeVideoID(videoURL);
+    if (!videoID) {
+      // throw new Error("Invalid YouTube URL");
+      return defaultImg;
+    }
+    return `https://img.youtube.com/vi/${videoID}/maxresdefault.jpg`;
+  }
+
+  const newImg = getDefaultImg(quizData.url, quizData.image);
 
   const buttons = ["Read Full Article", "Quiz Me!", "Remember this"];
 
@@ -176,7 +207,7 @@ function LurnyQuiz() {
             View Original
           </a>
           <img
-            src={quizData.image}
+            src={newImg}
             alt=""
             className="w-full h-[64rem] sm:h-[20rem] object-cover rounded-[2rem]"
           />
