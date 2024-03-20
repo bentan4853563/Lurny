@@ -72,7 +72,10 @@ function LurnyQuiz() {
     };
 
     if (lurnies.length > 0 && quizData && quizData.collections) {
-      let scoredLurnies = lurnies.map((lurny) => ({
+      let filteredLurnies = lurnies.filter(
+        (lurny) => lurny.url !== quizData.url
+      );
+      let scoredLurnies = filteredLurnies.map((lurny) => ({
         ...lurny,
         relevanceScore: calculateRelevance(
           lurny.collections,
@@ -490,7 +493,7 @@ function LurnyQuiz() {
                       onClick={() => handleClick(item.url)}
                       src={getDefaultImg(item.image, item.url)}
                       alt="lurny image"
-                      className="w-[10rem] cursor-pointer"
+                      className="w-[10rem] h-[6rem] cursor-pointer"
                     />
                     <span className="text-[1.5rem] text-left flex flex-1">
                       {item.title}
