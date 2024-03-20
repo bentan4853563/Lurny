@@ -473,7 +473,7 @@ function LurnyQuiz() {
                 collections.length > 0 &&
                 collections.slice(0, 9).map((keyword, index) => (
                   <li
-                    onClick={navigate("/lurny-cagetory")}
+                    onClick={() => navigate("/lurny-category")}
                     key={index}
                     className="text-gray-300 text-left text-[6rem] sm:text-[2rem]"
                   >
