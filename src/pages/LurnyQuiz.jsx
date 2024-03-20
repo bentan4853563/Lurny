@@ -27,6 +27,7 @@ function LurnyQuiz() {
 
   const [userData, setUserData] = useState(null);
   const [quizData, setQuizData] = useState({});
+  const [relatedLurnies, setRelatedLurnies] = useState([]);
 
   const [content, setContent] = useState(0);
   const [currentQuestionNumber, setCurrentQuestionNumber] = useState(0);
@@ -58,6 +59,35 @@ function LurnyQuiz() {
       getLurnies();
     }
   }, [lurnies]);
+
+  useEffect(() => {
+    const calculateRelevance = (lurnyCollections, targetCollections) => {
+      return lurnyCollections.reduce((score, collection) => {
+        return score + (targetCollections.includes(collection) ? 1 : 0);
+      }, 0);
+    };
+
+    if (lurnies.length > 0 && quizData && quizData.collections) {
+      let scoredLurnies = lurnies.map((lurny) => ({
+        ...lurny,
+        relevanceScore: calculateRelevance(
+          lurny.collections,
+          quizData.collections
+        ),
+      }));
+
+      scoredLurnies.sort((a, b) => b.relevanceScore - a.relevanceScore);
+
+      // Get top 10 or fewer related lurnies
+      const topRelatedLurnies = scoredLurnies
+        .slice(0, 10)
+        .filter((lurny) => lurny.relevanceScore > 0);
+
+      setRelatedLurnies(topRelatedLurnies);
+    } else {
+      setRelatedLurnies([]); // Reset related lurnies if no relevant data is present
+    }
+  }, [lurnies, quizData]);
 
   const getLurnies = async () => {
     console.log("Get Lurnies");
@@ -144,6 +174,10 @@ function LurnyQuiz() {
 
   const classNames = (...classes) => {
     return classes.filter(Boolean).join(" ");
+  };
+
+  const handleClick = (url) => {
+    navigate(`/lurny/quiz/${encodeURIComponent(url)}`);
   };
 
   return (
@@ -444,19 +478,25 @@ function LurnyQuiz() {
             <span className="text-start text-[8rem] sm:text-[3rem] font-bold">
               Related Lurnies
             </span>
-            {/* <div className="flex flex-col gap-[1.5rem]">
-              {relatedLurnies.map((item, index) => (
-                <div
-                  key={index}
-                  className="flex items-center gap-[2rem] cursor-pointer"
-                >
-                  <img src={item.img} alt="lurny image" className="w-[10rem]" />
-                  <span className="text-[1.5rem] text-left flex flex-1">
-                    {item.title}
-                  </span>
-                </div>
-              ))}
-            </div> */}
+            <div className="flex flex-col gap-[1.5rem]">
+              {relatedLurnies.length > 0 &&
+                relatedLurnies.map((item, index) => (
+                  <div
+                    key={index}
+                    onClick={() => handleClick(item.url)}
+                    className="flex items-center gap-[2rem] cursor-pointer"
+                  >
+                    <img
+                      src={item.img}
+                      alt="lurny image"
+                      className="w-[10rem]"
+                    />
+                    <span className="text-[1.5rem] text-left flex flex-1">
+                      {item.title}
+                    </span>
+                  </div>
+                ))}
+            </div>
           </div>
         </div>
       </div>
