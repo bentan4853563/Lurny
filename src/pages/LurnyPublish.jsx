@@ -48,7 +48,7 @@ const LurnyPublish = () => {
   useEffect(() => {
     if (location.state) {
       console.log(location.state.category);
-      // setSelectedCategories(location.state.category);
+      setSelectedCategories(location.state.category);
     }
   }, [location]);
 
@@ -178,10 +178,7 @@ const LurnyPublish = () => {
         <div className="text-[12rem] lg:text-[4rem] font-bold">
           {selectedCategories.length > 0 &&
             selectedCategories.map((category, index) => (
-              <span
-                key={index}
-                className="flex flex-wrap justify-center gap-[2rem]"
-              >
+              <span key={index} className="flex justify-center gap-[2rem]">
                 {category}
               </span>
             ))}
