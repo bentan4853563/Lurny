@@ -251,13 +251,17 @@ function LurnyQuiz() {
           >
             View Original
           </a>
-          <img
-            src={
-              userData.email === "bigboss44144@gmail.com" ? defaultImg : newImg
-            }
-            alt=""
-            className="w-full h-[64rem] sm:h-[20rem] object-cover rounded-[2rem]"
-          />
+          {userData && (
+            <img
+              src={
+                userData.email === "bigboss44144@gmail.com"
+                  ? defaultImg
+                  : newImg
+              }
+              alt=""
+              className="w-full h-[64rem] sm:h-[20rem] object-cover rounded-[2rem]"
+            />
+          )}
         </div>
 
         <div className="flex flex-1 px-0 sm:px-[8rem]">

@@ -68,12 +68,16 @@ function LurnyItem({ data }) {
       onClick={handleClick}
       className="w-[80rem] sm:w-[48rem] lg:w-[32rem] cursor-pointer hover:scale-105 hover:duration-300"
     >
-      <img
-        src={userData.email === "bigboss44144@gmail.com" ? defaultImg : newImg}
-        // src={newImg}
-        alt="lurny image"
-        className="h-[40rem] sm:h-[24rem] lg:h-[16rem] w-full object-cover rounded-[2rem] sm:rounded-[1.5rem]"
-      />
+      {userData && (
+        <img
+          src={
+            userData.email === "bigboss44144@gmail.com" ? defaultImg : newImg
+          }
+          // src={newImg}
+          alt="lurny image"
+          className="h-[40rem] sm:h-[24rem] lg:h-[16rem] w-full object-cover rounded-[2rem] sm:rounded-[1.5rem]"
+        />
+      )}
       <div className="w-full flex flex-col text-white items-start gap-[2rem] sm:gap-[1rem] p-[4rem] sm:p-[2rem]">
         <span className="w-full text-start text-[5rem] sm:text-[3rem] lg:text-[1.2rem] font-semibold truncate">
           {getCategory}
