@@ -252,8 +252,9 @@ function LurnyQuiz() {
             View Original
           </a>
           <img
-            src={newImg}
-            // src="###"
+            src={
+              userData.email === "bigboss44144@gmail.com" ? defaultImg : newImg
+            }
             alt=""
             className="w-full h-[64rem] sm:h-[20rem] object-cover rounded-[2rem]"
           />

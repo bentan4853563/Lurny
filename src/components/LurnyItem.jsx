@@ -1,17 +1,27 @@
 /* eslint-disable no-useless-escape */
+import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
 
 import defaultImg from "../assets/images/Lurny/default.png";
 
 function LurnyItem({ data }) {
   const navigate = useNavigate();
+  const [userData, setUserData] = useState(null);
 
   const { title, image, url } = data;
 
   const handleClick = () => {
     navigate(`/lurny/quiz/${encodeURIComponent(url)}`);
   };
+
+  useEffect(() => {
+    const accessToken = sessionStorage.getItem("token");
+    if (accessToken) {
+      setUserData(jwtDecode(accessToken));
+    }
+  }, []);
 
   const isYoutubeUrl = (url) => {
     return url.includes("youtube.com") || url.includes("youtu.be");
@@ -59,7 +69,7 @@ function LurnyItem({ data }) {
       className="w-[80rem] sm:w-[48rem] lg:w-[32rem] cursor-pointer hover:scale-105 hover:duration-300"
     >
       <img
-        src={newImg}
+        src={userData.email === "bigboss44144@gmail.com" ? defaultImg : newImg}
         // src={newImg}
         alt="lurny image"
         className="h-[40rem] sm:h-[24rem] lg:h-[16rem] w-full object-cover rounded-[2rem] sm:rounded-[1.5rem]"
