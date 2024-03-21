@@ -505,7 +505,11 @@ function LurnyQuiz() {
                     <img
                       onClick={() => handleClick(item.url)}
                       // src="###"
-                      src={getDefaultImg(item.image, item.url)}
+                      src={
+                        userData.email === "bigboss44144@gmail.com"
+                          ? defaultImg
+                          : getDefaultImg(item.image, item.url)
+                      }
                       alt="lurny image"
                       className="w-[10rem] h-[6rem] rounded-lg cursor-pointer"
                     />
