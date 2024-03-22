@@ -35,7 +35,6 @@ const LurnyUser = () => {
   const currentItems = filterdLurnies.slice(indexOfFirstItem, indexOfLastItem);
   // Change page
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
-
   useEffect(() => {
     clearLurnies();
     const accessToken = sessionStorage.getItem("token");
@@ -62,7 +61,6 @@ const LurnyUser = () => {
   useEffect(() => {
     clearLurnies();
     if (tempLurnyData) {
-      console.log("tempData", tempLurnyData);
       setTempData(tempLurnyData);
       localStorage.removeItem("tempData");
     } else {
@@ -287,7 +285,8 @@ const LurnyUser = () => {
           <div className="w-full flex flex-wrap justify-end gap-[8rem] lg:gap-[2rem]">
             {currentItems.length > 0 &&
               currentItems.map((lurny, index) => {
-                typeof lurny === "object" && (
+                console.log("=================>", lurny);
+                return (
                   <div key={index} className="relative">
                     <div className="absolute right-[2rem] lg:top-[10rem] z-50 cursor-pointer">
                       <IoTrashOutline
