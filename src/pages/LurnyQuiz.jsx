@@ -129,14 +129,6 @@ function LurnyQuiz() {
       });
   };
 
-  function goBack() {
-    history.goBack(); // Go back to the previous page
-  }
-
-  function goForward() {
-    history.goForward(); // Go forward to the next page if possible
-  }
-
   const { title, summary, quiz, collections } = quizData;
 
   const isYoutubeUrl = (url) => {
