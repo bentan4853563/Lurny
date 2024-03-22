@@ -214,7 +214,7 @@ function LurnyQuiz() {
             style={{
               width: "150px",
               textAlign: "center",
-              fontSize: "12px",
+              fontSize: "16px",
               backgroundColor: "#595959",
               color: "white",
               borderRadius: "4px",
@@ -249,7 +249,7 @@ function LurnyQuiz() {
             style={{
               width: "150px",
               textAlign: "center",
-              fontSize: "12px",
+              fontSize: "16px",
               backgroundColor: "#595959",
               color: "white",
               borderRadius: "4px",

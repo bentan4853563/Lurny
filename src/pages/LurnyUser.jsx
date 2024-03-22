@@ -19,7 +19,8 @@ import UserPan from "../components/UserPan";
 import NewPagination from "../components/NewPagination";
 
 const LurnyUser = () => {
-  const { lurnies, setLurnies, shareLurny, clearLurnies } = useLurnyStore();
+  const { lurnies, setLurnies, shareLurny, clearLurnies, deleteLurny } =
+    useLurnyStore();
   const [tempData, setTempData] = useState(null);
   const [showSidePan, setShowSidePan] = useState(false);
   const [userData, setUserData] = useState(null);
@@ -49,7 +50,6 @@ const LurnyUser = () => {
   const backend_url = import.meta.env.VITE_BACKEND_URL;
   useEffect(() => {
     // clearLurnies();
-
     if (userData) {
       myLurnies();
     }
@@ -212,7 +212,7 @@ const LurnyUser = () => {
                 toast.success("Deleted successfuly!", {
                   position: "top-right",
                 });
-                myLurnies();
+                deleteLurny(id);
               } else {
                 toast.error("Faild delete!", {
                   position: "top-right",
