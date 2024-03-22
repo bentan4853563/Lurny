@@ -66,7 +66,7 @@ function LurnyItem({ data }) {
   return (
     <div
       onClick={handleClick}
-      className="w-[80rem] sm:w-[48rem] lg:w-[32rem] cursor-pointer hover:scale-105 hover:duration-300"
+      className="w-[80rem] sm:w-[48rem] lg:w-[32rem] cursor-pointer"
     >
       {userData && (
         <img

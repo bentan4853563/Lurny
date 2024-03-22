@@ -263,7 +263,7 @@ const LurnyUser = () => {
     <div className="min-w-[100vw] min-h-[100vh] font-raleway">
       <LurnyHeader />
       <ToastContainer className="text-[2rem]" />
-      <div className="w-full bg-[#262626] flex flex-1 p-[12rem] sm:p-[6rem] gap-[12rem] sm:gap-[4rem]">
+      <div className="w-full bg-[#262626] flex flex-1 py-[12rem] sm:py-[6rem] px-[24rem] sm:px-[12rem] gap-[12rem] sm:gap-[12rem]">
         {/* Toggle button for mobile */}
         <div
           onClick={() => setShowSidePan(!showSidePan)}

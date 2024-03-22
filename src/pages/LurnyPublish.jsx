@@ -208,7 +208,7 @@ const LurnyPublish = () => {
           {filteredLurnies.length} Lurnies and counting…
         </span>
       </div>
-      <div className="w-full bg-[#262626] flex flex-1 p-[12rem] sm:p-[6rem] gap-[12rem] sm:gap-[4rem]">
+      <div className="w-full bg-[#262626] flex flex-1 py-[12rem] sm:py-[6rem] px-[24rem] sm:px-[12rem] gap-[12rem] sm:gap-[12rem]">
         {/* Toggle button for mobile */}
         <div
           onClick={() => setShowFilter(!showFilter)}

@@ -78,7 +78,7 @@ const LurnySearch = () => {
       <LurnyHeader />
       <ToastContainer className="text-start" />
 
-      <div className="w-full bg-[#262626] flex flex-col p-[12rem] sm:p-[6rem] gap-[12rem] sm:gap-[4rem]">
+      <div className="w-full bg-[#262626] flex flex-col py-[12rem] sm:py-[6rem] px-[24rem] sm:px-[12rem] sm:gap-[12rem]">
         {/* Search bar */}
         <div className="bg-[#1A1A1A] w-full px-[2rem] py-[1rem] flex flex-item items-center rounded-[0.5rem]">
           <ImSearch className="text-white text-[3rem]" />
