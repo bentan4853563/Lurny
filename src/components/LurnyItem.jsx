@@ -24,7 +24,11 @@ function LurnyItem({ data }) {
   }, []);
 
   const isYoutubeUrl = (url) => {
-    return url.includes("youtube.com") || url.includes("youtu.be");
+    if (url) {
+      return url.includes("youtube.com") || url.includes("youtu.be");
+    } else {
+      return false;
+    }
   };
 
   const getDefaultImg = (image, url) => {
