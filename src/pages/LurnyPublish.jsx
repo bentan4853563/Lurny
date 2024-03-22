@@ -237,7 +237,7 @@ const LurnyPublish = () => {
         </div>
 
         <div className="w-full flex flex-col justify-between items-start">
-          <div className="flex flex-wrap justify-end gap-[8rem] lg:gap-[2rem]">
+          <div className="flex flex-wrap ml-[6rem] justify-start gap-[8rem] lg:gap-[2rem]">
             {currentItems.map(
               (lurny, index) =>
                 lurny.shared && <LurnyItem key={index} data={lurny} />

@@ -72,7 +72,7 @@ export default function FilterPan({
   };
 
   return (
-    <div className="min-w-[32rem] bg-[#262626] flex flex-col items-center gap-[8rem] lg:gap-[2rem]">
+    <div className="min-w-[32rem] w-[140rem] sm:w-[72rem] lg:w-[36rem]  bg-[#262626] flex flex-col items-center gap-[8rem] lg:gap-[2rem]">
       {/* Category Filter */}
       <div className="w-full px-[10rem] sm:px-[6rem] lg:px-[2.5rem] py-[4rem] lg:py-0 bg-[#2E2E2E] rounded-[1.5rem] flex flex-col items-start">
         <span className="text-white text-start text-[10rem] sm:text-[5rem] lg:text-[2rem]  my-[2rem] select-none">

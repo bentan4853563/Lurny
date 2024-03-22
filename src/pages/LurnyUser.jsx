@@ -19,8 +19,7 @@ import UserPan from "../components/UserPan";
 import NewPagination from "../components/NewPagination";
 
 const LurnyUser = () => {
-  const { lurnies, setLurnies, shareLurny, clearLurnies, deleteLurny } =
-    useLurnyStore();
+  const { lurnies, setLurnies, shareLurny, clearLurnies } = useLurnyStore();
   const [tempData, setTempData] = useState(null);
   const [showSidePan, setShowSidePan] = useState(false);
   const [userData, setUserData] = useState(null);
@@ -210,10 +209,10 @@ const LurnyUser = () => {
                 }
               );
               if (response.ok) {
-                deleteLurny(id);
                 toast.success("Deleted successfuly!", {
                   position: "top-right",
                 });
+                myLurnies();
               } else {
                 toast.error("Faild delete!", {
                   position: "top-right",
@@ -282,37 +281,37 @@ const LurnyUser = () => {
           className={`${showSidePan ? "absolute" : "hidden"} sm:block`}
         ></div>
         <div className="w-full flex flex-col justify-between items-center">
-          <div className="w-full flex flex-wrap justify-end gap-[8rem] lg:gap-[2rem]">
+          <div className="w-full flex flex-wrap ml-[12rem] justify-start gap-[8rem] lg:gap-[2rem]">
             {currentItems.length > 0 &&
               currentItems.map((lurny, index) => {
-                console.log("=================>", lurny);
-                return (
-                  <div key={index} className="relative">
-                    <div className="absolute right-[2rem] lg:top-[10rem] z-50 cursor-pointer">
-                      <IoTrashOutline
-                        onClick={() => handleDelete(lurny._id)}
-                        className="text-[4rem] text-white hover:text-red-400"
-                      />
-                    </div>
+                if (typeof lurny === "object" && Object.keys(lurny).length > 3)
+                  return (
+                    <div key={index} className="relative">
+                      <div className="absolute right-[2rem] lg:top-[10rem] z-50 cursor-pointer">
+                        <IoTrashOutline
+                          onClick={() => handleDelete(lurny._id)}
+                          className="text-[4rem] text-white hover:text-red-400"
+                        />
+                      </div>
 
-                    <LurnyItem data={lurny} />
-                    {lurny.shared ? (
-                      <div className="bg-[#00B050] py-[1rem] mt-auto rounded-md text-white text-[6rem] sm:text-[2rem] cursor-pointer">
-                        Shared
-                      </div>
-                    ) : (
-                      <div
-                        className="bg-white px-[2rem] py-[0.8rem] mt-auto rounded-md flex justify-between items-center text-black text-[2.2rem] cursor-pointer"
-                        onClick={() => handleShare(lurny._id)}
-                      >
-                        <TfiShare />
-                        <span className="flex flex-1 justify-center">
-                          Share with Community
-                        </span>
-                      </div>
-                    )}
-                  </div>
-                );
+                      <LurnyItem data={lurny} />
+                      {lurny.shared ? (
+                        <div className="bg-[#00B050] py-[1rem] mt-auto rounded-md text-white text-[6rem] sm:text-[2rem] cursor-pointer">
+                          Shared
+                        </div>
+                      ) : (
+                        <div
+                          className="bg-white px-[2rem] py-[0.8rem] mt-auto rounded-md flex justify-between items-center text-black text-[2.2rem] cursor-pointer"
+                          onClick={() => handleShare(lurny._id)}
+                        >
+                          <TfiShare />
+                          <span className="flex flex-1 justify-center">
+                            Share with Community
+                          </span>
+                        </div>
+                      )}
+                    </div>
+                  );
               })}
           </div>
           <NewPagination

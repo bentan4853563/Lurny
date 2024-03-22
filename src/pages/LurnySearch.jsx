@@ -111,7 +111,7 @@ const LurnySearch = () => {
           </div>
 
           <div className="flex flex-col justify-between">
-            <div className="flex flex-wrap justify-end gap-[8rem] lg:gap-[2rem]">
+            <div className="flex flex-wrap ml-[12rem] justify-start gap-[8rem] lg:gap-[2rem]">
               {currentItems.length > 0 &&
                 currentItems.map(
                   (lurny, index) =>
