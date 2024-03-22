@@ -1,7 +1,7 @@
 // import PropTypes from "prop-types";
 
 import { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams, useHistory } from "react-router-dom";
 import { Tooltip } from "react-tooltip";
 import { jwtDecode } from "jwt-decode";
 
@@ -20,6 +20,7 @@ import defaultImg from "../assets/images/Lurny/default.png";
 
 function LurnyQuiz() {
   const navigate = useNavigate();
+  const history = useHistory();
 
   const backend_url = import.meta.env.VITE_BACKEND_URL;
 
@@ -96,6 +97,15 @@ function LurnyQuiz() {
     }
   }, [lurnies, quizData]);
 
+  useEffect(() => {
+    setAnswerNumber(null);
+    setAnswered(false);
+  }, [content, currentQuestionNumber]);
+
+  useEffect(() => {
+    setCurrentQuestionNumber(0);
+  }, [content]);
+
   const getLurnies = async () => {
     console.log("Get Lurnies");
     const options = {
@@ -119,14 +129,13 @@ function LurnyQuiz() {
       });
   };
 
-  useEffect(() => {
-    setAnswerNumber(null);
-    setAnswered(false);
-  }, [content, currentQuestionNumber]);
+  function goBack() {
+    history.goBack(); // Go back to the previous page
+  }
 
-  useEffect(() => {
-    setCurrentQuestionNumber(0);
-  }, [content]);
+  function goForward() {
+    history.goForward(); // Go forward to the next page if possible
+  }
 
   const { title, summary, quiz, collections } = quizData;
 
@@ -172,12 +181,12 @@ function LurnyQuiz() {
     setAnswered(false);
   };
 
-  const handlePreviousContent = () => {
-    content > 0 && setContent(content - 1);
+  const goBack = () => {
+    history.goBack();
   };
 
-  const handleNextContent = () => {
-    content < 2 && setContent(content + 1);
+  const goForward = () => {
+    history.goForward();
   };
 
   const classNames = (...classes) => {
@@ -201,7 +210,8 @@ function LurnyQuiz() {
         </Link>
         <div className="flex items-center gap-[4rem] sm:gap-[2rem]">
           <button
-            onClick={handlePreviousContent}
+            onClick={goBack}
+            data-tooltip-id="previous-lurny"
             className="flex items-center justify-center p-[0.5rem] sm:pl-2 text-white text-[10rem] sm:text-[3rem] bg-[#7F52BB] rounded-full focus:outline-none"
           >
             <IoIosArrowBack />
@@ -220,7 +230,8 @@ function LurnyQuiz() {
             </span>
           ))}
           <button
-            onClick={handleNextContent}
+            onClick={goForward}
+            data-tooltip-id="previous-lurny"
             className="flex items-center justify-center p-[0.5rem] sm:pl-2 text-white text-[10rem] sm:text-[3rem] bg-[#7F52BB] rounded-full focus:outline-none"
           >
             <IoIosArrowForward />
@@ -351,6 +362,16 @@ function LurnyQuiz() {
                         borderRadius: "8px",
                         padding: "24px",
                       }}
+                    />
+                    <Tooltip
+                      id="previous-lurny"
+                      place="bottom"
+                      content="Previous Lurny"
+                    />
+                    <Tooltip
+                      id="next-lurny"
+                      place="bottom"
+                      content="Next Lurny"
                     />
                   </div>
                 ))}
