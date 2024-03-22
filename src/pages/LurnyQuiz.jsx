@@ -222,7 +222,7 @@ function LurnyQuiz() {
           ))}
           <button
             onClick={goForward}
-            data-tooltip-id="previous-lurny"
+            data-tooltip-id="next-lurny"
             className="flex items-center justify-center p-[0.5rem] sm:pl-2 text-white text-[10rem] sm:text-[3rem] bg-[#7F52BB] rounded-full focus:outline-none"
           >
             <IoIosArrowForward />
