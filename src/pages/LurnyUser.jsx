@@ -59,6 +59,23 @@ const LurnyUser = () => {
 
   const tempLurnyData = localStorage.getItem("tempData");
 
+  const submit = () => {
+    confirmAlert({
+      title: "Confirm to submit",
+      message: "Are you sure to do this.",
+      buttons: [
+        {
+          label: "Yes",
+          onClick: () => alert("Click Yes"),
+        },
+        {
+          label: "No",
+          onClick: () => alert("Click No"),
+        },
+      ],
+    });
+  };
+
   useEffect(() => {
     clearLurnies();
     if (tempLurnyData) {
@@ -193,50 +210,29 @@ const LurnyUser = () => {
   };
 
   const handleDelete = async (id) => {
-    confirmAlert({
-      title: "Confirm!",
-      message: "Are you sure to delete this Lurny?",
-      buttons: [
-        {
-          label: "Yes",
-          onClick: async () => {
-            try {
-              const response = await fetch(
-                `${backend_url}/api/lurny/delete/${id}`,
-                {
-                  method: "DELETE",
-                  headers: {
-                    "Content-Type": "application/json",
-                    "ngrok-skip-browser-warning": true,
-                  },
-                }
-              );
-              if (response.ok) {
-                deleteLurny(id);
-                toast.success("Deleted successfuly!", {
-                  position: "top-right",
-                });
-              } else {
-                toast.error("Faild share!", {
-                  position: "top-right",
-                });
-              }
-            } catch (error) {
-              toast.error(
-                "Network error when trying to update the shared field!",
-                {
-                  position: "top-right",
-                }
-              );
-            }
-          },
+    try {
+      const response = await fetch(`${backend_url}/api/lurny/delete/${id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          "ngrok-skip-browser-warning": true,
         },
-        {
-          label: "No",
-          onClick: () => console.log("no"),
-        },
-      ],
-    });
+      });
+      if (response.ok) {
+        deleteLurny(id);
+        toast.success("Deleted successfuly!", {
+          position: "top-right",
+        });
+      } else {
+        toast.error("Faild delete!", {
+          position: "top-right",
+        });
+      }
+    } catch (error) {
+      toast.error("Network error when trying to delete lurny!", {
+        position: "top-right",
+      });
+    }
   };
 
   const myLurnies = async () => {
@@ -263,7 +259,7 @@ const LurnyUser = () => {
     <div className="min-w-[100vw] min-h-[100vh] font-raleway">
       <LurnyHeader />
       <ToastContainer className="text-[2rem]" />
-      <div className="w-full bg-[#262626] flex flex-1 py-[12rem] sm:py-[6rem] px-[24rem] sm:px-[12rem] gap-[12rem] sm:gap-[12rem]">
+      <div className="w-full bg-[#262626] flex flex-1 justify-between px-[12rem] py-[6rem]">
         {/* Toggle button for mobile */}
         <div
           onClick={() => setShowSidePan(!showSidePan)}
@@ -291,18 +287,21 @@ const LurnyUser = () => {
             {currentItems.length > 0 &&
               currentItems.map((lurny, index) => (
                 <div key={index} className="relative">
-                  <IoTrashOutline
-                    onClick={() => handleDelete(lurny._id)}
-                    className="text-[4rem] text-white absolute left-[2rem] h-[32rem] sm:h-[18rem] lg:h-[12rem]"
-                  />
+                  <div className="absolute right-[2rem] lg:top-[10rem] z-50 cursor-pointer">
+                    <IoTrashOutline
+                      onClick={() => handleDelete(lurny._id)}
+                      className="text-[4rem] text-white"
+                    />
+                  </div>
+
                   <LurnyItem data={lurny} />
                   {lurny.shared ? (
-                    <div className="bg-[#00B050] py-[1rem] rounded-md text-white text-[6rem] sm:text-[2rem] cursor-pointer">
+                    <div className="bg-[#00B050] py-[1rem] mt-auto rounded-md text-white text-[6rem] sm:text-[2rem] cursor-pointer">
                       Shared
                     </div>
                   ) : (
                     <div
-                      className="bg-white px-[2rem] py-[0.8rem] rounded-md flex justify-between items-center text-black text-[2.2rem] cursor-pointer"
+                      className="bg-white px-[2rem] py-[0.8rem] mt-auto rounded-md flex justify-between items-center text-black text-[2.2rem] cursor-pointer"
                       onClick={() => handleShare(lurny._id)}
                     >
                       <TfiShare />

@@ -13,7 +13,7 @@ function UserPan({ all, saved, showAll }) {
   }, []);
 
   return (
-    <div className="w-[140rem] sm:w-[72rem] lg:w-[30rem] bg-[#262626] flex flex-col items-start gap-[8rem] lg:gap-[2rem]">
+    <div className="w-[140rem] sm:w-[72rem] lg:w-[36rem] bg-[#262626] flex flex-col items-start gap-[8rem] lg:gap-[2rem]">
       {userData && (
         <img
           src={userData.photoURL}
