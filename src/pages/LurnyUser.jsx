@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
-import { confirmAlert } from "react-confirm-alert";
 import { jwtDecode } from "jwt-decode";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -58,23 +57,6 @@ const LurnyUser = () => {
   }, [userData]);
 
   const tempLurnyData = localStorage.getItem("tempData");
-
-  const submit = () => {
-    confirmAlert({
-      title: "Confirm to submit",
-      message: "Are you sure to do this.",
-      buttons: [
-        {
-          label: "Yes",
-          onClick: () => alert("Click Yes"),
-        },
-        {
-          label: "No",
-          onClick: () => alert("Click No"),
-        },
-      ],
-    });
-  };
 
   useEffect(() => {
     clearLurnies();
