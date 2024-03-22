@@ -163,7 +163,7 @@ function LurnyQuiz() {
 
   const newImg = getDefaultImg(quizData.image, quizData.url);
 
-  const buttons = ["Read Full Article", "Quiz Me!", "Remember this"];
+  const buttons = ["Summary", "Quiz Me!", "Remember this"];
 
   const handleNextQuiz = () => {
     if (currentQuestionNumber < quiz.length - 1) {
@@ -191,7 +191,7 @@ function LurnyQuiz() {
   return (
     <div className="min-h-[100vh] font-raleway">
       {/* Header */}
-      <div className="w-full bg-black px-[4rem] sm:px-[16rem] lg:px-[20rem] flex justify-between items-center py-[4rem] lg:py-[1.5rem]">
+      <div className="w-full bg-black px-[4rem] sm:px-[16rem] lg:px-[12rem] flex justify-between items-center py-[4rem] lg:py-[1.5rem]">
         <Link to="/lurny/list" className="select-none">
           <img
             src={LetterLogo}
