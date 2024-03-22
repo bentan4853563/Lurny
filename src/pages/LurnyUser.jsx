@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { confirmAlert } from "react-confirm-alert";
 import { jwtDecode } from "jwt-decode";
+import "react-toastify/dist/ReactToastify.css";
+
 import { TfiShare } from "react-icons/tfi";
 import { IoIosArrowForward } from "react-icons/io";
+import { IoTrashOutline } from "react-icons/io5";
 
 import { useLurnyStore } from "../stores/lurnyStore";
 
@@ -15,7 +18,8 @@ import UserPan from "../components/UserPan";
 import NewPagination from "../components/NewPagination";
 
 const LurnyUser = () => {
-  const { lurnies, setLurnies, shareLurny, clearLurnies } = useLurnyStore();
+  const { lurnies, setLurnies, shareLurny, clearLurnies, deleteLurny } =
+    useLurnyStore();
   const [tempData, setTempData] = useState(null);
   const [showSidePan, setShowSidePan] = useState(false);
   const [userData, setUserData] = useState(null);
@@ -23,7 +27,7 @@ const LurnyUser = () => {
   const [filterdLurnies, setFilteredLurnies] = useState([]);
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(8); // Adjust as needed
+  const [itemsPerPage] = useState(20); // Adjust as needed
   // Get current items
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -48,7 +52,6 @@ const LurnyUser = () => {
   useEffect(() => {
     // clearLurnies();
 
-    console.log("userData", userData);
     if (userData) {
       myLurnies();
     }
@@ -88,7 +91,7 @@ const LurnyUser = () => {
       });
       // Construct a new lurnyObject with all the extracted data.
       const lurnyObject = {
-        user: userData.uid,
+        user: userData.id,
         title,
         summary,
         collections,
@@ -108,7 +111,7 @@ const LurnyUser = () => {
     if (showAll) {
       setFilteredLurnies(lurnies);
     } else {
-      let temp = lurnies.filter((lurny) => lurny.user !== userData.uid);
+      let temp = lurnies.filter((lurny) => lurny.user !== userData.id);
       setFilteredLurnies(temp);
     }
   }, [showAll, lurnies]);
@@ -119,7 +122,7 @@ const LurnyUser = () => {
     if (userData && lurnies.length > 0) {
       const count =
         lurnies.length > 0
-          ? lurnies.filter((obj) => obj.user !== userData.uid).length
+          ? lurnies.filter((obj) => obj.user !== userData.id).length
           : 0;
       setCountSharedTrue(count);
     }
@@ -189,6 +192,53 @@ const LurnyUser = () => {
     }
   };
 
+  const handleDelete = async (id) => {
+    confirmAlert({
+      title: "Confirm!",
+      message: "Are you sure to delete this Lurny?",
+      buttons: [
+        {
+          label: "Yes",
+          onClick: async () => {
+            try {
+              const response = await fetch(
+                `${backend_url}/api/lurny/delete/${id}`,
+                {
+                  method: "DELETE",
+                  headers: {
+                    "Content-Type": "application/json",
+                    "ngrok-skip-browser-warning": true,
+                  },
+                }
+              );
+              if (response.ok) {
+                deleteLurny(id);
+                toast.success("Deleted successfuly!", {
+                  position: "top-right",
+                });
+              } else {
+                toast.error("Faild share!", {
+                  position: "top-right",
+                });
+              }
+            } catch (error) {
+              toast.error(
+                "Network error when trying to update the shared field!",
+                {
+                  position: "top-right",
+                }
+              );
+            }
+          },
+        },
+        {
+          label: "No",
+          onClick: () => console.log("no"),
+        },
+      ],
+    });
+  };
+
   const myLurnies = async () => {
     const options = {
       method: "POST", // Request method
@@ -196,7 +246,7 @@ const LurnyUser = () => {
         "Content-Type": "application/json", // Indicate JSON content
         "ngrok-skip-browser-warning": true,
       },
-      body: JSON.stringify({ user: userData.uid }),
+      body: JSON.stringify({ user: userData.id }),
     };
     await fetch(`${backend_url}/api/lurny/my-lurnies`, options)
       .then((response) => response.json()) // Parse JSON response
@@ -236,11 +286,15 @@ const LurnyUser = () => {
         <div
           className={`${showSidePan ? "absolute" : "hidden"} sm:block`}
         ></div>
-        <div className="w-full flex flex-col justify-between  items-center">
-          <div className="w-full flex flex-wrap justify-start gap-[8rem] lg:gap-[2rem]">
+        <div className="w-full flex flex-col justify-between items-center">
+          <div className="w-full flex flex-wrap justify-end gap-[8rem] lg:gap-[2rem]">
             {currentItems.length > 0 &&
               currentItems.map((lurny, index) => (
-                <div key={index}>
+                <div key={index} className="relative">
+                  <IoTrashOutline
+                    onClick={() => handleDelete(lurny._id)}
+                    className="text-[4rem] text-white absolute left-[2rem] h-[32rem] sm:h-[18rem] lg:h-[12rem]"
+                  />
                   <LurnyItem data={lurny} />
                   {lurny.shared ? (
                     <div className="bg-[#00B050] py-[1rem] rounded-md text-white text-[6rem] sm:text-[2rem] cursor-pointer">

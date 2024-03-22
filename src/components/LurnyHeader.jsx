@@ -27,7 +27,7 @@ export default function LurnyHeader() {
   };
 
   return (
-    <div className="w-full bg-black px-[16rem] lg:px-[20rem] flex justify-between items-center py-[4rem] lg:py-[1.5rem]">
+    <div className="w-full bg-black px-[12rem] sm:px-[6rem] flex justify-between items-center py-[4rem] lg:py-[1.5rem]">
       <Link to="/lurny/list" className="select-none">
         <img
           src={LetterLogo}

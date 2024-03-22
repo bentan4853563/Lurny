@@ -21,7 +21,7 @@ const LurnySearch = () => {
 
   // Pagenation state
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(8); // Adjust as needed
+  const [itemsPerPage] = useState(20); // Adjust as needed
   // Get current items
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -111,7 +111,7 @@ const LurnySearch = () => {
           </div>
 
           <div className="flex flex-col justify-between">
-            <div className="flex flex-wrap justify-start gap-[8rem] lg:gap-[2rem]">
+            <div className="flex flex-wrap justify-end gap-[8rem] lg:gap-[2rem]">
               {currentItems.length > 0 &&
                 currentItems.map(
                   (lurny, index) =>

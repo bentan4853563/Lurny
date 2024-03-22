@@ -28,7 +28,7 @@ const LurnyPublish = () => {
 
   // Pagenation state
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(8); // Adjust as needed
+  const [itemsPerPage] = useState(20); // Adjust as needed
   // Get current items
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -237,7 +237,7 @@ const LurnyPublish = () => {
         </div>
 
         <div className="w-full flex flex-col justify-between items-start">
-          <div className="flex flex-wrap justify-start gap-[8rem] lg:gap-[2rem]">
+          <div className="flex flex-wrap justify-end gap-[8rem] lg:gap-[2rem]">
             {currentItems.map(
               (lurny, index) =>
                 lurny.shared && <LurnyItem key={index} data={lurny} />
