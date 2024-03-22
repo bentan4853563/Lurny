@@ -207,6 +207,19 @@ function LurnyQuiz() {
           >
             <IoIosArrowBack />
           </button>
+          <Tooltip
+            id="previous-lurny"
+            place="bottom"
+            content="Previous Lurny"
+            style={{
+              width: "150px",
+              textAlign: "center",
+              backgroundColor: "#595959",
+              color: "white",
+              borderRadius: "8px",
+              padding: "4px",
+            }}
+          />
           {buttons.map((name, index) => (
             <span
               key={index}
@@ -227,6 +240,20 @@ function LurnyQuiz() {
           >
             <IoIosArrowForward />
           </button>
+
+          <Tooltip
+            id="next-lurny"
+            place="bottom"
+            content="Next Lurny"
+            style={{
+              width: "150px",
+              textAlign: "center",
+              backgroundColor: "#595959",
+              color: "white",
+              borderRadius: "8px",
+              padding: "4px",
+            }}
+          />
         </div>
         <div className="flex items-center gap-[8rem] lg:gap-[2rem]">
           {userData && (
@@ -352,32 +379,6 @@ function LurnyQuiz() {
                         color: "white",
                         borderRadius: "8px",
                         padding: "24px",
-                      }}
-                    />
-                    <Tooltip
-                      id="previous-lurny"
-                      place="bottom"
-                      content="Previous Lurny"
-                      style={{
-                        width: "50px",
-                        textAlign: "center",
-                        backgroundColor: "#595959",
-                        color: "white",
-                        borderRadius: "8px",
-                        padding: "4px",
-                      }}
-                    />
-                    <Tooltip
-                      id="next-lurny"
-                      place="bottom"
-                      content="Next Lurny"
-                      style={{
-                        width: "50px",
-                        textAlign: "center",
-                        backgroundColor: "#595959",
-                        color: "white",
-                        borderRadius: "8px",
-                        padding: "4px",
                       }}
                     />
                   </div>
