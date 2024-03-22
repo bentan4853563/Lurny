@@ -222,7 +222,7 @@ function LurnyQuiz() {
           ))}
           <button
             onClick={goForward}
-            data-tooltip-id="next-lurny"
+            data-tip="next-lurny"
             className="flex items-center justify-center p-[0.5rem] sm:pl-2 text-white text-[10rem] sm:text-[3rem] bg-[#7F52BB] rounded-full focus:outline-none"
           >
             <IoIosArrowForward />
@@ -333,7 +333,7 @@ function LurnyQuiz() {
                       quiz[currentQuestionNumber].correctanswer ===
                         quiz[currentQuestionNumber].answer[index] && (
                         <IoIosInformationCircleOutline
-                          data-tooltip-id="correct-answer"
+                          data-tip="correct-answer"
                           onClick={() =>
                             setIsShowCorrectAnswer(!isShowCorrectAnswer)
                           }
@@ -448,7 +448,7 @@ function LurnyQuiz() {
                       quiz[currentQuestionNumber].correctanswer ===
                         quiz[currentQuestionNumber].answer[index] && (
                         <IoIosInformationCircleOutline
-                          data-tooltip-id="correct-answer"
+                          data-tip="correct-answer"
                           onClick={() =>
                             setIsShowCorrectAnswer(!isShowCorrectAnswer)
                           }
