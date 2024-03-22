@@ -358,11 +358,27 @@ function LurnyQuiz() {
                       id="previous-lurny"
                       place="bottom"
                       content="Previous Lurny"
+                      style={{
+                        width: "500px",
+                        textAlign: "center",
+                        backgroundColor: "#595959",
+                        color: "white",
+                        borderRadius: "8px",
+                        padding: "4px",
+                      }}
                     />
                     <Tooltip
                       id="next-lurny"
                       place="bottom"
                       content="Next Lurny"
+                      style={{
+                        width: "500px",
+                        textAlign: "center",
+                        backgroundColor: "#595959",
+                        color: "white",
+                        borderRadius: "8px",
+                        padding: "4px",
+                      }}
                     />
                   </div>
                 ))}
