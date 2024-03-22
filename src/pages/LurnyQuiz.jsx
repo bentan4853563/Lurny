@@ -222,7 +222,7 @@ function LurnyQuiz() {
           ))}
           <button
             onClick={goForward}
-            data-tip="next-lurny"
+            data-tooltip-id="next-lurny"
             className="flex items-center justify-center p-[0.5rem] sm:pl-2 text-white text-[10rem] sm:text-[3rem] bg-[#7F52BB] rounded-full focus:outline-none"
           >
             <IoIosArrowForward />
@@ -333,7 +333,7 @@ function LurnyQuiz() {
                       quiz[currentQuestionNumber].correctanswer ===
                         quiz[currentQuestionNumber].answer[index] && (
                         <IoIosInformationCircleOutline
-                          data-tip="correct-answer"
+                          data-tooltip-id="correct-answer"
                           onClick={() =>
                             setIsShowCorrectAnswer(!isShowCorrectAnswer)
                           }
@@ -359,7 +359,7 @@ function LurnyQuiz() {
                       place="bottom"
                       content="Previous Lurny"
                       style={{
-                        width: "500px",
+                        width: "50px",
                         textAlign: "center",
                         backgroundColor: "#595959",
                         color: "white",
@@ -372,7 +372,7 @@ function LurnyQuiz() {
                       place="bottom"
                       content="Next Lurny"
                       style={{
-                        width: "500px",
+                        width: "50px",
                         textAlign: "center",
                         backgroundColor: "#595959",
                         color: "white",
@@ -448,10 +448,7 @@ function LurnyQuiz() {
                       quiz[currentQuestionNumber].correctanswer ===
                         quiz[currentQuestionNumber].answer[index] && (
                         <IoIosInformationCircleOutline
-                          data-tip="correct-answer"
-                          onClick={() =>
-                            setIsShowCorrectAnswer(!isShowCorrectAnswer)
-                          }
+                          data-tooltip-id="correct-answer"
                           className="text-[4rem] my-auto right-4"
                         />
                       )}
