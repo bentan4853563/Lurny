@@ -243,7 +243,7 @@ const LurnyUser = () => {
         "Content-Type": "application/json", // Indicate JSON content
         "ngrok-skip-browser-warning": true,
       },
-      body: JSON.stringify({ user: userData.id }),
+      body: JSON.stringify({ user: userData.uid }),
     };
     await fetch(`${backend_url}/api/lurny/my-lurnies`, options)
       .then((response) => response.json()) // Parse JSON response
