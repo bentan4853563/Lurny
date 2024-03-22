@@ -36,13 +36,13 @@ function UserPan({ all, saved, showAll }) {
       </button>
       <span
         // onClick={() => showAll(false)}
-        className="w-full text-white hover:text-gray-300 text-left text-[2rem] font-bold border-b border-white cursor-pointer"
+        className="w-full text-gray-500 hover:text-gray-300 text-left text-[2rem] font-bold border-b border-white cursor-pointer"
       >
         Saved Lurnies (0)
       </span>
       <span
         // onClick={() => showAll(true)}
-        className="w-full text-gray-500 hover:text-gray-300 text-left text-[2rem] font-bold border-b border-white cursor-pointer"
+        className="w-full text-white hover:text-gray-300 text-left text-[2rem] font-bold border-b border-white cursor-pointer"
       >
         My Lurnies ({all})
       </span>
