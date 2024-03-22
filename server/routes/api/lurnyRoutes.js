@@ -58,12 +58,13 @@ router.patch("/share/:id", async (req, res) => {
 router.delete("/delete/:id", async (req, res) => {
   try {
     const { id } = req.params;
+    console.log(id);
     const result = await Lurny.findOneAndDelete(id);
 
     if (!result) {
       return res.status(404).send("Document deleted.");
     }
-    res.send(result);
+    res.send("Successfully deleted");
   } catch (error) {
     res.status(500).send("Internal Server Error");
   }
