@@ -1,7 +1,7 @@
 // import PropTypes from "prop-types";
 
 import { useEffect, useState } from "react";
-import { Link, useNavigate, useParams, useHistory } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { Tooltip } from "react-tooltip";
 import { jwtDecode } from "jwt-decode";
 
@@ -20,7 +20,6 @@ import defaultImg from "../assets/images/Lurny/default.png";
 
 function LurnyQuiz() {
   const navigate = useNavigate();
-  const history = useHistory();
 
   const backend_url = import.meta.env.VITE_BACKEND_URL;
 
@@ -174,11 +173,11 @@ function LurnyQuiz() {
   };
 
   const goBack = () => {
-    history.goBack();
+    navigate(-1);
   };
 
   const goForward = () => {
-    history.goForward();
+    navigate(1);
   };
 
   const classNames = (...classes) => {
