@@ -59,7 +59,7 @@ router.delete("/delete/:id", async (req, res) => {
   try {
     const { id } = req.params;
     console.log(id);
-    const result = await Lurny.findOneAndDelete(id);
+    const result = await Lurny.findByIdAndDelete(id);
 
     if (!result) {
       return res.status(404).send("Document deleted.");
