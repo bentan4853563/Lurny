@@ -35,14 +35,14 @@ function UserPan({ all, saved, showAll }) {
         Settings
       </button>
       <span
-        onClick={() => showAll(false)}
+        // onClick={() => showAll(false)}
         className="w-full text-white hover:text-gray-300 text-left text-[2rem] font-bold border-b border-white cursor-pointer"
       >
         Saved Lurnies ({saved})
       </span>
       <span
-        onClick={() => showAll(true)}
-        className="w-full text-white hover:text-gray-300 text-left text-[2rem] font-bold border-b border-white cursor-pointer"
+        // onClick={() => showAll(true)}
+        className="w-full text-gray-300 hover:text-gray-300 text-left text-[2rem] font-bold border-b border-white cursor-pointer"
       >
         My Lurnies ({all})
       </span>
