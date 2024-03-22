@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import { jwtDecode } from "jwt-decode";
 import "react-toastify/dist/ReactToastify.css";
+import { confirmAlert } from "react-confirm-alert"; // Import
+import "react-confirm-alert/src/react-confirm-alert.css";
 
 import { TfiShare } from "react-icons/tfi";
 import { IoIosArrowForward } from "react-icons/io";
@@ -192,29 +194,47 @@ const LurnyUser = () => {
   };
 
   const handleDelete = async (id) => {
-    try {
-      const response = await fetch(`${backend_url}/api/lurny/delete/${id}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-          "ngrok-skip-browser-warning": true,
+    confirmAlert({
+      title: "Are you sure to delete this Lurny?",
+      buttons: [
+        {
+          label: "Yes",
+          onClick: async () => {
+            try {
+              console.log(`${backend_url}/api/lurny/delete/${id}`);
+              const response = await fetch(
+                `${backend_url}/api/lurny/delete/${id}`,
+                {
+                  method: "DELETE",
+                  headers: {
+                    "Content-Type": "application/json",
+                    "ngrok-skip-browser-warning": true,
+                  },
+                }
+              );
+              if (response.ok) {
+                deleteLurny(id);
+                toast.success("Deleted successfuly!", {
+                  position: "top-right",
+                });
+              } else {
+                toast.error("Faild delete!", {
+                  position: "top-right",
+                });
+              }
+            } catch (error) {
+              toast.error("Network error when trying to delete lurny!", {
+                position: "top-right",
+              });
+            }
+          },
         },
-      });
-      if (response.ok) {
-        deleteLurny(id);
-        toast.success("Deleted successfuly!", {
-          position: "top-right",
-        });
-      } else {
-        toast.error("Faild delete!", {
-          position: "top-right",
-        });
-      }
-    } catch (error) {
-      toast.error("Network error when trying to delete lurny!", {
-        position: "top-right",
-      });
-    }
+        {
+          label: "No",
+          onClick: () => console.log("Click No"),
+        },
+      ],
+    });
   };
 
   const myLurnies = async () => {
@@ -272,7 +292,7 @@ const LurnyUser = () => {
                   <div className="absolute right-[2rem] lg:top-[10rem] z-50 cursor-pointer">
                     <IoTrashOutline
                       onClick={() => handleDelete(lurny._id)}
-                      className="text-[4rem] text-white"
+                      className="text-[4rem] text-white hover:text-red-400"
                     />
                   </div>
 
