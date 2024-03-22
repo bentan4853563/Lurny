@@ -13,7 +13,7 @@ export const useLurnyStore = create((set) => ({
     })),
   deleteLurny: (id) =>
     set((state) => ({
-      lurnies: state.lurnies.map((item) => item._id === id),
+      lurnies: state.lurnies.filter((item) => item._id !== id),
     })),
   clearLurnies: () => set({ lurnies: [] }),
 }));
