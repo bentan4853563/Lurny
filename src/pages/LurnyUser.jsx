@@ -64,6 +64,7 @@ const LurnyUser = () => {
       localStorage.removeItem("tempData");
     } else {
       if (userData) {
+        console.log("=============>", userData, tempLurnyData);
         myLurnies();
       }
     }
