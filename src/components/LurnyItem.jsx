@@ -66,7 +66,7 @@ function LurnyItem({ data }) {
       return "Category";
     }
   };
-  console.log(title, image, url);
+
   return (
     <div
       onClick={handleClick}

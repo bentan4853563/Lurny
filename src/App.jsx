@@ -20,6 +20,7 @@ function App() {
         event.origin === trustedOrigin &&
         event.data.type === "FROM_EXTENSION"
       ) {
+        console.log("Received Data", event.data.data);
         localStorage.setItem("tempData", JSON.stringify(event.data.data));
       }
     }
