@@ -120,14 +120,14 @@ export default function Signin() {
             className=" flex items-center gap-[2rem] px-[4rem] sm:px-[1rem] py-[0.5rem] border border-gray-300 outline-none hover:border-[#7F52BB] rounded-md cursor-pointer hover:"
           >
             <GrGoogle />
-            <span className="text-black">Continue with Goggle</span>
+            <span className="text-black">Continue with Google</span>
           </div>
           <div
             onClick={signInWithFacebook}
             className="flex items-center gap-[2rem] px-[4rem] sm:px-[1rem] py-[0.5rem] border border-gray-300 outline-none hover:border-[#7F52BB] rounded-md cursor-pointer hover:"
           >
             <FaFacebookSquare />
-            <span>Continue with LinkedIn</span>
+            <span>Continue with Facebook</span>
           </div>
         </div>
         <p className="text-left text-[6rem] sm:text-[4rem] md:text-[2.5rem] lg:text-[2rem] xl:text-[1.5rem]">
