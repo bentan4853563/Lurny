@@ -74,3 +74,12 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+
+.goog-te-combo {
+  font-size: 2rem !important;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  width: 100%;
+  outline: none;
+}

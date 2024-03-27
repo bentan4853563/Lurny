@@ -96,6 +96,7 @@ function LurnyItem({ data }) {
 
 LurnyItem.propTypes = {
   data: PropTypes.object.isRequired,
+  index: PropTypes.number.isRequired,
 };
 
 export default LurnyItem;

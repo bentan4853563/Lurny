@@ -17,6 +17,9 @@ import "@szhsin/react-menu/dist/transitions/slide.css";
 
 import LetterLogo from "../assets/icons/letter_logo.png";
 import defaultImg from "../assets/images/Lurny/default.png";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import TranslateComponent from "../components/TranslateComponent";
 
 function LurnyQuiz() {
   const navigate = useNavigate();
@@ -27,6 +30,7 @@ function LurnyQuiz() {
 
   const [userData, setUserData] = useState(null);
   const [quizData, setQuizData] = useState({});
+  const [selectedIndex, setSelectedIndex] = useState();
   const [relatedLurnies, setRelatedLurnies] = useState([]);
 
   const [content, setContent] = useState(0);
@@ -36,17 +40,18 @@ function LurnyQuiz() {
   const [isShowCorrectAnswer, setIsShowCorrectAnswer] = useState(false);
 
   let { url } = useParams();
-
   useEffect(() => {
     setCurrentQuestionNumber(1);
     setAnswerNumber(null);
     setAnswered(false);
 
-    let decodedUrl = decodeURIComponent(url);
+    const decodedUrl = decodeURIComponent(url);
+
     if (lurnies.length > 0 && decodedUrl) {
-      const currentLurny = lurnies.find((lurny) => lurny.url === decodedUrl);
-      if (currentLurny) {
-        setQuizData(currentLurny);
+      const foundLurny = lurnies.find((lurny) => lurny.url === decodedUrl); // Utilize .find() for efficiency
+      if (foundLurny) {
+        setQuizData(foundLurny);
+        setSelectedIndex(lurnies.indexOf(foundLurny)); // Get index using indexOf since the item was found
       }
     }
   }, [lurnies, url]);
@@ -106,7 +111,6 @@ function LurnyQuiz() {
   }, [content]);
 
   const getLurnies = async () => {
-    console.log("Get Lurnies");
     const options = {
       method: "GET", // Request method
       headers: {
@@ -171,13 +175,30 @@ function LurnyQuiz() {
     }
     setAnswered(false);
   };
-
   const goBack = () => {
-    navigate(-1);
+    if (selectedIndex === 0) {
+      // toast.warning("This lurny is the first.", {
+      //   position: "top-right",
+      //   autoClose: 1000,
+      // });
+      alert("This lurny is the first.");
+    } else {
+      setQuizData(lurnies[selectedIndex - 1]);
+      setSelectedIndex(selectedIndex - 1);
+    }
   };
 
   const goForward = () => {
-    navigate(1);
+    if (selectedIndex < lurnies.length - 2) {
+      setQuizData(lurnies[selectedIndex + 1]);
+      setSelectedIndex(selectedIndex + 1);
+    } else {
+      // toast.warning("This lurny is the end.", {
+      //   position: "top-right",
+      //   autoClose: 1000,
+      // });
+      alert("This lurny is the end.");
+    }
   };
 
   const classNames = (...classes) => {
@@ -274,7 +295,7 @@ function LurnyQuiz() {
       {/* body */}
       <div className="flex flex-wrap px-[12rem] py-[8rem] gap-[8rem] sm:gap-0">
         {/* Image */}
-        <div className="w-full sm:w-[32rem] px-[16rem] sm:px-0 flex flex-col items-start">
+        <div className="w-full sm:w-[32rem] px-[16rem] sm:px-0 flex flex-col ">
           <a
             href={quizData.url}
             target="black"
@@ -293,6 +314,7 @@ function LurnyQuiz() {
               className="w-full h-[64rem] sm:h-[20rem] object-cover rounded-[2rem]"
             />
           )}
+          <TranslateComponent />
         </div>
 
         <div className="flex flex-1 px-0 sm:px-[8rem]">
@@ -314,7 +336,7 @@ function LurnyQuiz() {
                       key={index}
                       className=" flex items-start gap-[2rem] text-gray-300 text-left text-[7rem] leading-[7.5rem] sm:text-[2.3rem] sm:leading-[2.5rem]"
                     >
-                      <span>{index + 1}.</span>
+                      <span className="flex shrink-0">{index + 1}.</span>
                       <p>{item}</p>
                     </div>
                   ))}
@@ -328,6 +350,8 @@ function LurnyQuiz() {
                 Q{currentQuestionNumber + 1}:{" "}
                 {quiz[currentQuestionNumber].question}
               </p>
+
+              <ToastContainer />
 
               <div className="w-full flex flex-col gap-[4rem] sm:gap-[2rem] items-start">
                 {quiz[currentQuestionNumber].answer.map((answer, index) => (

@@ -14,8 +14,8 @@ import ProtectedRoute from "./routes/ProtectedRoutes";
 function App() {
   useEffect(() => {
     function handleMessage(event) {
-      const trustedOrigin =
-        "http://ec2-3-84-247-235.compute-1.amazonaws.com:3000";
+      const trustedOrigin = "http://localhost:5175";
+      console.log("Event", event);
       if (
         event.origin === trustedOrigin &&
         event.data.type === "FROM_EXTENSION"

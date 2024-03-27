@@ -26,6 +26,7 @@ const LurnyPublish = () => {
   const [categories, setCategories] = useState([{ category: "", count: 0 }]);
   const [media, setMedia] = useState([{ media: "", count: 0 }]);
 
+  console.log("lurnies", lurnies);
   // Pagenation state
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(20); // Adjust as needed
